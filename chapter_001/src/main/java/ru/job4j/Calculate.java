@@ -1,14 +1,14 @@
 package ru.job4j;
 
 /**
- *Class Calculate решение задачи части 001 урок 1.
+ *Class Calculate СЂРµС€РµРЅРёРµ Р·Р°РґР°С‡Рё С‡Р°СЃС‚Рё 001 СѓСЂРѕРє 1.
  *@autor Tatyana Belova
  *@since 27.06.2017
 */
 
 public class Calculate {
 	/**
-	 *Метод для вывода в консоль строки "Hello world"
+	 *РњРµС‚РѕРґ РґР»СЏ РІС‹РІРѕРґР° РІ РєРѕРЅСЃРѕР»СЊ СЃС‚СЂРѕРєРё "Hello world"
 	*/
 	public static void main (String [] args) {
 		System.out.println("Hello world");
