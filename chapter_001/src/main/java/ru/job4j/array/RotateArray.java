@@ -11,20 +11,19 @@ public class RotateArray {
 	*@return отсортированный массив
 	*/
 	public int[][] rotate(int[][] array) {
-		int n = array.length;
-		for (int i = 0; i <= (n - 1) / 2; i++) {
-			for (int j = i; j <= n - 2 - i; j++) {
-				int k = i;
-				int l = j;
-				int c = array[k][l];
-				do {
-						int a = array[l][n - 1 - k];
-						array [l][n - 1 - k] = c;
-						c = a;
-						int m = k;
-						k = l;
-						l = n - 1 - m;
-				} while ((k != i) || (l != j));
+		int n = array.length - 1;
+		for (int i = 0; i <= n; i++) {
+			for (int j = 0; j <= i; j++) {
+				int k = array[i][j];
+				array[i][j] = array[j][i];
+				array[j][i] = k;
+				}
+		}
+		for (int i = 0; i <= n; i++) {
+			for (int j = 0; j <= n / 2; j++) {
+				int m = array[i][j];
+				array[i][j] = array[i][n - j];
+				array[i][n - j] = m;
 			}
 		}
 		return array;
