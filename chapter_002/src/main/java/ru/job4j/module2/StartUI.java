@@ -3,49 +3,107 @@ package ru.job4j.module2;
 import java.util.Arrays;
 
 /**
- *Class Tracker решение задачи второго модуля.
+ *Class StartUI решение задачи второго модуля.
  *@author Tatyana Belova
  *@since 26.07.2017
 */
 public class StartUI {
 	/**
+	*добавление заявки.
+	*/
+	private static final int ADD = 0;
+	/**
+	*получить список заявок.
+	*/
+	private static final int GETALL = 1;
+	/**
+	*изменить заявку.
+	*/
+	private static final int UPDATE = 2;
+	/**
+	*удалить заявку.
+	*/
+	private static final int DELETE = 3;
+	/**
+	*найти заявку по id.
+	*/
+	private static final int FINDBYID = 4;
+	/**
+	*найти заявки по имени.
+	*/
+	private static final int FINDBYNAME = 5;
+	/**
+	*выход.
+	*/
+	private static final int EXIT = 6;
+	/**
+	*ввод данных.
+	*/
+	private Input input;
+	/**
+	*вывод данных.
+	*/
+	private Output output;
+	/**
+	*tracker.
+	*/
+	private Tracker tracker;
+	/**
+	*конструктор.
+	*@param input - ввод данных
+	*@param output - вывод данных
+	*@param tracker - tracker
+	*/
+	public StartUI(Input input, Output output, Tracker tracker) {
+		this.input = input;
+		this.output = output;
+		this.tracker = tracker;
+	}
+	/**
+	*метод init.
+	*/
+	public void init() {
+		int choice;
+		do {
+			this.showMenu();
+			choice = Integer.parseInt(input.ask("Enter your choice "));
+			switch (choice) {
+				case ADD:
+				this.showItem(tracker.add(this.addNewItem()));
+				break;
+				case GETALL:
+					this.showItems(tracker.getAll());
+					break;
+				case UPDATE:
+					tracker.update(this.editItem());
+					break;
+				case DELETE:
+					tracker.delete(input.ask("Please, enter item's id "));
+					break;
+				case FINDBYID:
+					this.showItem(tracker.findById(input.ask("Please, enter item's id ")));
+					break;
+				case FINDBYNAME:
+					this.showItems(tracker.findByName(input.ask("Please, enter item's name ")));
+					break;
+				default:
+			}
+		} while (choice != EXIT);
+	}
+	/**
 	*метод main.
 	*@param args - args
 	*/
 	public static void main(String[] args) {
+		Input input = new ConsoleInput();
+		Output output = new ConsoleOutput();
 		Tracker tracker = new Tracker();
-		ConsoleInput console = new ConsoleInput();
-		int choice;
-		do {
-			showMenu();
-			choice = Integer.parseInt(console.ask("Enter your choice "));
-			switch (choice) {
-				case 0:
-				showItem(tracker.add(addNewItem()));
-				break;
-				case 1:
-					showItems(tracker.getAll());
-					break;
-				case 2:
-					tracker.update(editItem());
-					break;
-				case 3:
-					tracker.delete(console.ask("Please, enter item's id "));
-					break;
-				case 4:
-					showItem(tracker.findById(console.ask("Please, enter item's id ")));
-					break;
-				case 5:
-					showItems(tracker.findByName(console.ask("Please, enter item's name ")));
-					break;
-				default:
-			}
-		} while (choice != 6);
+		new StartUI(input, output, tracker).init();
 	}
 	/**
 	*метод выводит на экран меню.
 	*/
-	static void showMenu() {
+	private void showMenu() {
 		System.out.println("0. Add new item.");
 		System.out.println("1. Show all items.");
 		System.out.println("2. Edit item.");
@@ -58,19 +116,18 @@ public class StartUI {
 	*метод опрашивает пользователя и заполняет поля заявки.
 	*@return item - заявка
 	*/
-	static Item addNewItem() {
-		ConsoleInput consoleInput = new ConsoleInput();
+	private Item addNewItem() {
 		Item item = new Item();
-		item.setName(consoleInput.ask("Input item's name "));
-		item.setDescription(consoleInput.ask("Input item's description "));
+		item.setName(input.ask("Input item's name "));
+		item.setDescription(input.ask("Input item's description "));
 		item.setCreated(System.currentTimeMillis());
 		item.setId("" + System.currentTimeMillis());
 		String[] forcomments = new String[10];
 		int i = 0;
 		String end;
 		do {
-			forcomments[i++] = consoleInput.ask("Input item's comment ");
-			end = consoleInput.ask("Is it all? (y/n) ");
+			forcomments[i++] = input.ask("Input item's comment ");
+			end = input.ask("Is it all? (y/n) ");
 		} while (end.equals("n"));
 		item.setComments(Arrays.copyOf(forcomments, i));
 		return item;
@@ -79,21 +136,21 @@ public class StartUI {
 	*метод выводит на экран поля заявки.
 	*@param item - item
 	*/
-	static void showItem(Item item) {
-		System.out.println("Item's name " + item.getName());
-		System.out.println("Item's description " + item.getDescription());
-		System.out.println("Item was created " + item.getCreated());
-		System.out.println("Item's id " + item.getId());
-		System.out.println("Item's comments:");
+	private void showItem(Item item) {
+		this.output.write("Item's name " + item.getName());
+		this.output.write("Item's description " + item.getDescription());
+		this.output.write("Item was created " + item.getCreated());
+		this.output.write("Item's id " + item.getId());
+		this.output.write("Item's comments:");
 		for (String s : item.getComments()) {
-			System.out.println(s);
+			this.output.write(s);
 		}
 	}
 	/**
 	*метод выводит на экран все заявки из массива.
 	*@param items - массив заявок
 	*/
-	static void showItems(Item[] items) {
+	private void showItems(Item[] items) {
 		System.out.println("Items:");
 		for (int i = 0; i < items.length; i++) {
 			showItem(items[i]);
@@ -104,19 +161,18 @@ public class StartUI {
 	*метод редактирует заявку.
 	*@return item - измененная заявка
 	*/
-	static Item editItem() {
+	private Item editItem() {
 		Item item = new Item();
-		ConsoleInput consoleInput = new ConsoleInput();
-		item.setId(consoleInput.ask("Please, enter item's id "));
-		item.setName(consoleInput.ask("Input item's new name "));
-		item.setDescription(consoleInput.ask("Input item's new description "));
+		item.setId(input.ask("Please, enter item's id "));
+		item.setName(input.ask("Input item's new name "));
+		item.setDescription(input.ask("Input item's new description "));
 		item.setCreated(System.currentTimeMillis());
 		String[] forcomments = new String[10];
 		int i = 0;
 		String end;
 		do {
-			forcomments[i++] = consoleInput.ask("Input item's new comment ");
-			end = consoleInput.ask("Is it all? (y/n) ");
+			forcomments[i++] = input.ask("Input item's new comment ");
+			end = input.ask("Is it all? (y/n) ");
 		} while (end.equals("n"));
 		item.setComments(Arrays.copyOf(forcomments, i));
 		return item;
