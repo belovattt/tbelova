@@ -5,8 +5,13 @@ import ru.job4j.module2.StubOutput;
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
+/**
+ * Класс PaintTest для тестирования рисования фигуры.
+ */
 public class PaintTest {
+    /**
+     * Треугольник.
+     */
     @Test
     public void triangleTest() {
         Output output = new StubOutput();
@@ -16,6 +21,9 @@ public class PaintTest {
         String[] expected = {String.format("  *  %s *** %s*****", line, line)};
         assertThat(result, is(expected));
     }
+    /**
+     * Квадрат.
+     */
     @Test
     public void squareTest() {
         Output output = new StubOutput();
