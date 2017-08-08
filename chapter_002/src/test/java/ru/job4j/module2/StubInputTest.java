@@ -19,7 +19,7 @@ public class StubInputTest {
     @Test
 	public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
 		Tracker tracker = new Tracker();
-		Input input = new StubInput(new String[] {"0", "test name", "description", "comment", "y", "6"});
+		Input input = new StubInput(new String[] {"0", "test name", "description", "comment", "y", "y"});
 		Output output = new StubOutput();
 		new StartUI(input, output, tracker).init();
 		assertThat(tracker.getAll()[0].getName(), is("test name"));
@@ -38,7 +38,7 @@ public class StubInputTest {
 		String[] comments = {"comment1", "comment2"};
 		item.setComments(comments);
 		item = tracker.add(item);
-		Input input = new StubInput(new String[] {"1", "6"});
+		Input input = new StubInput(new String[] {"5", "y"});
 		Output output = new StubOutput();
 		new StartUI(input, output, tracker).init();
 		String[] expected = {"Item's name first", "Item's description first item", "Item was created " + item.getCreated(), "Item's id " + item.getId(), "Item's comments:", "comment1", "comment2"};
@@ -58,7 +58,7 @@ public class StubInputTest {
 		String[] comments = {"comment1", "comment2"};
 		item1.setComments(comments);
 		item1 = tracker.add(item1);
-		Input input = new StubInput(new String[] {"2", item1.getId(), "new name", "new description", "new comments", "y", "6"});
+		Input input = new StubInput(new String[] {"2", item1.getId(), "new name", "new description", "new comments", "y", "y"});
 		Output output = new StubOutput();
 		new StartUI(input, output, tracker).init();
 		assertThat(tracker.getAll()[0].getName(), is("new name"));
@@ -91,7 +91,7 @@ public class StubInputTest {
 		item1 = tracker.add(item1);
 		item2 = tracker.add(item2);
 		item3 = tracker.add(item3);
-		Input input = new StubInput(new String[] {"3", item2.getId(), "6"});
+		Input input = new StubInput(new String[] {"3", item2.getId(), "y"});
 		Output output = new StubOutput();
 		new StartUI(input, output, tracker).init();
 		Item[] expected = {item1, item3};
@@ -125,7 +125,7 @@ public class StubInputTest {
 		item1 = tracker.add(item1);
 		item2 = tracker.add(item2);
 		item3 = tracker.add(item3);
-		Input input = new StubInput(new String[] {"4", item2.getId(), "6"});
+		Input input = new StubInput(new String[] {"1", item2.getId(), "y"});
 		Output output = new StubOutput();
 		new StartUI(input, output, tracker).init();
 		String[] expected = {"Item's name " + item2.getName(), "Item's description " + item2.getDescription(), "Item was created " + item2.getCreated(), "Item's id " + item2.getId(), "Item's comments:", "comment1", "comment2"};
@@ -159,7 +159,7 @@ public class StubInputTest {
 		item1 = tracker.add(item1);
 		item2 = tracker.add(item2);
 		item3 = tracker.add(item3);
-		Input input = new StubInput(new String[] {"5", item1.getName(), "6"});
+		Input input = new StubInput(new String[] {"4", item1.getName(), "y"});
 		Output output = new StubOutput();
 		new StartUI(input, output, tracker).init();
 		String[] expected = {"Item's name " + item1.getName(), "Item's description " + item1.getDescription(), "Item was created " + item1.getCreated(), "Item's id " + item1.getId(), "Item's comments:", "comment1", "comment2", "Item's name " + item3.getName(), "Item's description " + item3.getDescription(), "Item was created " + item3.getCreated(), "Item's id " + item3.getId(), "Item's comments:", "comment1", "comment2"};
