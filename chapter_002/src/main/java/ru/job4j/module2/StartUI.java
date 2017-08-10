@@ -45,8 +45,7 @@ public class StartUI {
         menu.fillActions();
         do {
             menu.showMenu();
-            int key = Integer.parseInt(input.ask("Select:"));
-            menu.select(key);
+            menu.select(this.input.ask("Select:", menu.getMaxvalue()));
         } while (!"y".equals(this.input.ask("Exit? (y)")));
     }
 
@@ -56,7 +55,7 @@ public class StartUI {
      * @param args - args
      */
     public static void main(String[] args) {
-        Input input = new ConsoleInput();
+        Input input = new ValidateInput();
         Output output = new ConsoleOutput();
         Tracker tracker = new Tracker();
         new StartUI(input, output, tracker).init();

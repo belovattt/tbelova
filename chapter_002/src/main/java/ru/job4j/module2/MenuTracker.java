@@ -24,7 +24,20 @@ public class MenuTracker {
     /**
      * массив действий пользователя.
      */
-    private UserAction[] actions = new UserAction[7];
+    private UserAction[] actions = new UserAction[6];
+    /**
+     * номер последнего пункта меню.
+     */
+    private int maxvalue = actions.length - 1;
+
+    /**
+     * метод возвращает maxvalue.
+     *
+     * @return maxvalue
+     */
+    public int getMaxvalue() {
+        return this.maxvalue;
+    }
 
     /**
      * конструктор.
@@ -143,14 +156,19 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Output output, Tracker tracker) {
             Item item = tracker.findById(input.ask("Enter item's id"));
-            output.write("Item's name " + item.getName());
-            output.write("Item's description " + item.getDescription());
-            output.write("Item was created " + item.getCreated());
-            output.write("Item's id " + item.getId());
-            output.write("Item's comments:");
-            for (String s : item.getComments()) {
-                output.write(s);
+            if (item == null) {
+                output.write("Item not found");
+            } else {
+                output.write("Item's name " + item.getName());
+                output.write("Item's description " + item.getDescription());
+                output.write("Item was created " + item.getCreated());
+                output.write("Item's id " + item.getId());
+                output.write("Item's comments:");
+                for (String s : item.getComments()) {
+                    output.write(s);
+                }
             }
+
         }
 
         /**
@@ -161,7 +179,6 @@ public class MenuTracker {
             return "1: Find item by id";
         }
     }
-
 
 
 }
@@ -184,20 +201,23 @@ class EditItem implements UserAction {
      */
     @Override
     public void execute(Input input, Output output, Tracker tracker) {
-        Item item = new Item();
-        item.setId(input.ask("Please, enter item's id "));
-        item.setName(input.ask("Input item's new name "));
-        item.setDescription(input.ask("Input item's new description "));
-        item.setCreated(System.currentTimeMillis());
-        String[] forcomments = new String[10];
-        int i = 0;
-        String end;
-        do {
-            forcomments[i++] = input.ask("Input item's new comment ");
-            end = input.ask("Is it all? (y/n) ");
-        } while (end.equals("n"));
-        item.setComments(Arrays.copyOf(forcomments, i));
-        tracker.update(item);
+        Item item = tracker.findById(input.ask("Please, enter item's id "));
+        if (item == null) {
+            output.write("Item doesn't exist");
+        } else {
+            item.setName(input.ask("Input item's new name "));
+            item.setDescription(input.ask("Input item's new description "));
+            item.setCreated(System.currentTimeMillis());
+            String[] forcomments = new String[10];
+            int i = 0;
+            String end;
+            do {
+                forcomments[i++] = input.ask("Input item's new comment ");
+                end = input.ask("Is it all? (y/n) ");
+            } while (end.equals("n"));
+            item.setComments(Arrays.copyOf(forcomments, i));
+            tracker.update(item);
+        }
     }
 
     /**
@@ -228,7 +248,12 @@ class DeleteItem implements UserAction {
     @Override
     public void execute(Input input, Output output, Tracker tracker) {
         String id = input.ask("Please, enter item's id ");
-        tracker.delete(id);
+        Item item = tracker.findById(id);
+        if (item == null) {
+            output.write("Item doesn't exist");
+        } else {
+            tracker.delete(id);
+        }
     }
 
     /**
@@ -239,6 +264,7 @@ class DeleteItem implements UserAction {
         return "3: Delete item";
     }
 }
+
 class FindByName implements UserAction {
     /**
      * выбор пункта меню.
@@ -258,16 +284,16 @@ class FindByName implements UserAction {
     @Override
     public void execute(Input input, Output output, Tracker tracker) {
         String name = input.ask("Please, enter item's name");
-       for (Item item : tracker.findByName(name)) {
-           output.write("Item's name " + item.getName());
-           output.write("Item's description " + item.getDescription());
-           output.write("Item was created " + item.getCreated());
-           output.write("Item's id " + item.getId());
-           output.write("Item's comments:");
-           for (String s : item.getComments()) {
-               output.write(s);
-           }
-       }
+        for (Item item : tracker.findByName(name)) {
+            output.write("Item's name " + item.getName());
+            output.write("Item's description " + item.getDescription());
+            output.write("Item was created " + item.getCreated());
+            output.write("Item's id " + item.getId());
+            output.write("Item's comments:");
+            for (String s : item.getComments()) {
+                output.write(s);
+            }
+        }
     }
 
     /**
@@ -278,6 +304,7 @@ class FindByName implements UserAction {
         return "4: Find item by name";
     }
 }
+
 class ShowAll implements UserAction {
     /**
      * выбор пункта меню.
