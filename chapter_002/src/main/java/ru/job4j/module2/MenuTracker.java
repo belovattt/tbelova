@@ -9,26 +9,32 @@ import java.util.Arrays;
  * @since 5.08.2017
  */
 public class MenuTracker {
+
     /**
      * input.
      */
     private Input input;
+
     /**
      * output.
      */
     private Output output;
+
     /**
      * tracker.
      */
     private Tracker tracker;
+
     /**
      * массив действий пользователя.
      */
     private UserAction[] actions = new UserAction[6];
+
     /**
      * текущая позиция.
      */
     private int position = 0;
+
     /**
      * номер последнего пункта меню.
      */

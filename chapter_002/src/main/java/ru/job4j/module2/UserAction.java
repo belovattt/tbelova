@@ -1,9 +1,11 @@
 package ru.job4j.module2;
+
 /**
  *Interface UserAction.
  *@author Tatyana Belova
  *@since 5.08.2017
  */
+
 public interface UserAction {
     /**
      *выбор пункта меню.

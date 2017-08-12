@@ -14,10 +14,12 @@ public class StartUI {
      * ввод данных.
      */
     private Input input;
+
     /**
      * вывод данных.
      */
     private Output output;
+
     /**
      * tracker.
      */
