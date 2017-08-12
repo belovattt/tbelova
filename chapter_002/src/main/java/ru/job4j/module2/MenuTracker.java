@@ -26,6 +26,10 @@ public class MenuTracker {
      */
     private UserAction[] actions = new UserAction[6];
     /**
+     * текущая позиция.
+     */
+    private int position = 0;
+    /**
      * номер последнего пункта меню.
      */
     private int maxvalue = actions.length - 1;
@@ -65,12 +69,12 @@ public class MenuTracker {
      * заполнение массива actions.
      */
     public void fillActions() {
-        this.actions[0] = this.new AddItem();
-        this.actions[1] = new MenuTracker.FindItemById();
-        this.actions[2] = new EditItem();
-        this.actions[3] = new DeleteItem();
-        this.actions[4] = new FindByName();
-        this.actions[5] = new ShowAll();
+        this.actions[position] = this.new AddItem("Add item", position++);
+        this.actions[position] = new MenuTracker.FindItemById("Find item by id", position++);
+        this.actions[position] = new EditItem("Edit item", position++);
+        this.actions[position] = new DeleteItem("Delete item", position++);
+        this.actions[position] = new FindByName("Find item by name", position++);
+        this.actions[position] = new ShowAll("Show all", position++);
     }
 
     /**
@@ -91,14 +95,10 @@ public class MenuTracker {
         this.actions[key].execute(this.input, this.output, this.tracker);
     }
 
-    private class AddItem implements UserAction {
+    private class AddItem extends BaseAction {
 
-        /**
-         * выбор пункта меню.
-         */
-        @Override
-        public int key() {
-            return 0;
+        AddItem(String name, int key) {
+            super(name, key);
         }
 
         /**
@@ -127,23 +127,20 @@ public class MenuTracker {
 
         }
 
-        /**
-         * вывод информации .
-         */
-        @Override
-        public String info() {
-            return "0: Add item";
-        }
+
     }
 
-    private static class FindItemById implements UserAction {
+    private static class FindItemById extends BaseAction {
+
 
         /**
-         * выбор пункта меню.
+         * Конструктор.
+         *
+         * @param name - имя события
+         * @param key  - номер пункта меню
          */
-        @Override
-        public int key() {
-            return 1;
+        FindItemById(String name, int key) {
+            super(name, key);
         }
 
         /**
@@ -171,25 +168,22 @@ public class MenuTracker {
 
         }
 
-        /**
-         * вывод информации .
-         */
-        @Override
-        public String info() {
-            return "1: Find item by id";
-        }
     }
 
 
 }
 
-class EditItem implements UserAction {
+class EditItem extends BaseAction {
+
+
     /**
-     * выбор пункта меню.
+     * Конструктор.
+     *
+     * @param name - имя события
+     * @param key  - номер пункта меню
      */
-    @Override
-    public int key() {
-        return 1;
+    EditItem(String name, int key) {
+        super(name, key);
     }
 
     /**
@@ -220,22 +214,19 @@ class EditItem implements UserAction {
         }
     }
 
-    /**
-     * вывод информации .
-     */
-    @Override
-    public String info() {
-        return "2: Edit item";
-    }
+
 }
 
-class DeleteItem implements UserAction {
+class DeleteItem extends BaseAction {
+
     /**
-     * выбор пункта меню.
+     * Конструктор.
+     *
+     * @param name - имя события
+     * @param key  - номер пункта меню
      */
-    @Override
-    public int key() {
-        return 3;
+    DeleteItem(String name, int key) {
+        super(name, key);
     }
 
     /**
@@ -256,23 +247,19 @@ class DeleteItem implements UserAction {
         }
     }
 
-    /**
-     * вывод информации .
-     */
-    @Override
-    public String info() {
-        return "3: Delete item";
-    }
 }
 
-class FindByName implements UserAction {
+class FindByName extends BaseAction {
     /**
-     * выбор пункта меню.
+     * Конструктор.
+     *
+     * @param name - имя события
+     * @param key  - номер пункта меню
      */
-    @Override
-    public int key() {
-        return 4;
+    FindByName(String name, int key) {
+        super(name, key);
     }
+
 
     /**
      * действие.
@@ -296,23 +283,20 @@ class FindByName implements UserAction {
         }
     }
 
-    /**
-     * вывод информации .
-     */
-    @Override
-    public String info() {
-        return "4: Find item by name";
-    }
+
 }
 
-class ShowAll implements UserAction {
+class ShowAll extends BaseAction {
     /**
-     * выбор пункта меню.
+     * Конструктор.
+     *
+     * @param name - имя события
+     * @param key  - номер пункта меню
      */
-    @Override
-    public int key() {
-        return 5;
+    ShowAll(String name, int key) {
+        super(name, key);
     }
+
 
     /**
      * действие.
@@ -335,13 +319,7 @@ class ShowAll implements UserAction {
         }
     }
 
-    /**
-     * вывод информации .
-     */
-    @Override
-    public String info() {
-        return "5: Show all items";
-    }
+
 }
 
 

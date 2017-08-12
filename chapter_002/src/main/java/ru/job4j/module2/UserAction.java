@@ -8,7 +8,11 @@ public interface UserAction {
     /**
      *выбор пункта меню.
      */
-    int key();
+    void setKey(int key);
+    /**
+     *номер текущего пункта меню.
+     */
+    int getKey();
     /**
      *действие.
      * @param input - ввод
