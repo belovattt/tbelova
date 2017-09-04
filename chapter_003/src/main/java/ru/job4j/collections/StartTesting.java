@@ -1,5 +1,6 @@
 package ru.job4j.collections;
 
+
 import java.util.*;
 /**
  * Class StartTesting для тестирования скорости работы коллекций.
