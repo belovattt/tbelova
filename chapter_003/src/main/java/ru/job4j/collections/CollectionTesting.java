@@ -29,7 +29,6 @@ public class CollectionTesting {
 
         }
         return System.currentTimeMillis() - begin;
-
     }
     /**
      * метод вычисляет время в миллисекундах, необходимое для удаления всех строк из коллекции.
