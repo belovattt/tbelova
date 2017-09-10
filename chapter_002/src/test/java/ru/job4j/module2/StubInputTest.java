@@ -2,6 +2,8 @@ package ru.job4j.module2;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -23,7 +25,7 @@ public class StubInputTest {
         Input input = new StubInput(new String[]{"0", "test name", "description", "comment", "y", "y"});
         Output output = new StubOutput();
         new StartUI(input, output, tracker).init();
-        assertThat(tracker.getAll()[0].getName(), is("test name"));
+        assertThat(tracker.getAll().get(0).getName(), is("test name"));
     }
 
     /**
@@ -37,7 +39,9 @@ public class StubInputTest {
         item.setName("first");
         item.setDescription("first item");
         item.setCreated(System.currentTimeMillis());
-        String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
         item.setComments(comments);
         item = tracker.add(item);
         Input input = new StubInput(new String[]{"5", "y"});
@@ -58,13 +62,15 @@ public class StubInputTest {
         item1.setName("first");
         item1.setDescription("first item");
         item1.setCreated(System.currentTimeMillis());
-        String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
         item1.setComments(comments);
         item1 = tracker.add(item1);
         Input input = new StubInput(new String[]{"2", item1.getId(), "new name", "new description", "new comments", "y", "y"});
         Output output = new StubOutput();
         new StartUI(input, output, tracker).init();
-        assertThat(tracker.getAll()[0].getName(), is("new name"));
+        assertThat(tracker.getAll().get(0).getName(), is("new name"));
     }
 
     /**
@@ -78,7 +84,9 @@ public class StubInputTest {
         item1.setName("first");
         item1.setDescription("first item");
         item1.setCreated(System.currentTimeMillis());
-        String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
         item1.setComments(comments);
         Item item2 = new Item();
         item2.setId("2" + System.currentTimeMillis());
@@ -98,7 +106,9 @@ public class StubInputTest {
         Input input = new StubInput(new String[]{"3", item2.getId(), "y"});
         Output output = new StubOutput();
         new StartUI(input, output, tracker).init();
-        Item[] expected = {item1, item3};
+        ArrayList<Item> expected = new ArrayList<>();
+        expected.add(item1);
+        expected.add(item3);
         assertThat(tracker.getAll(), is(expected));
     }
 
@@ -113,7 +123,9 @@ public class StubInputTest {
         item1.setName("first");
         item1.setDescription("first item");
         item1.setCreated(System.currentTimeMillis());
-        String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
         item1.setComments(comments);
         Item item2 = new Item();
         item2.setId("2" + System.currentTimeMillis());
@@ -148,7 +160,9 @@ public class StubInputTest {
         item1.setName("first");
         item1.setDescription("first item");
         item1.setCreated(System.currentTimeMillis());
-        String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
         item1.setComments(comments);
         Item item2 = new Item();
         item2.setId("2" + System.currentTimeMillis());
@@ -181,7 +195,7 @@ public class StubInputTest {
         Input input = new ValidateInputForTest(new String[]{"10", "0", "test name", "description", "comment", "y", "y"});
         Output output = new StubOutput();
         new StartUI(input, output, tracker).init();
-        assertThat(input.getOutputWrite()[0] + tracker.getAll()[0].getName(), is("Please enter number between 0 and 5" + "test name"));
+        assertThat(input.getOutputWrite()[0] + tracker.getAll().get(0).getName(), is("Please enter number between 0 and 5" + "test name"));
     }
 
     /**
@@ -193,7 +207,7 @@ public class StubInputTest {
         Input input = new ValidateInputForTest(new String[]{"a", "0", "test name", "description", "comment", "y", "y"});
         Output output = new StubOutput();
         new StartUI(input, output, tracker).init();
-        assertThat(input.getOutputWrite()[0] + tracker.getAll()[0].getName(), is("Please enter correct data" + "test name"));
+        assertThat(input.getOutputWrite()[0] + tracker.getAll().get(0).getName(), is("Please enter correct data" + "test name"));
     }
 
     /**
@@ -207,7 +221,9 @@ public class StubInputTest {
         item1.setName("first");
         item1.setDescription("first item");
         item1.setCreated(System.currentTimeMillis());
-        String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
         item1.setComments(comments);
         item1 = tracker.add(item1);
         Input input = new ValidateInputForTest(new String[]{"2", "qwe", "y"});
@@ -227,7 +243,9 @@ public class StubInputTest {
         item1.setName("first");
         item1.setDescription("first item");
         item1.setCreated(System.currentTimeMillis());
-        String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
         item1.setComments(comments);
         Item item2 = new Item();
         item2.setId("2" + System.currentTimeMillis());

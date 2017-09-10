@@ -1,6 +1,9 @@
 package ru.job4j.module2;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -24,7 +27,9 @@ public class TrackerTest {
 		item1.setName("first");
 		item1.setDescription("first item");
 		item1.setCreated(System.currentTimeMillis());
-		String[] comments = {"comment1", "comment2"};
+		ArrayList<String> comments = new ArrayList<String>();
+		comments.add("comment1");
+		comments.add("comment2");
 		item1.setComments(comments);
 		Item result = tracker.add(item1);
 		assertThat(result, is(item1));
@@ -40,7 +45,9 @@ public class TrackerTest {
 		item1.setName("first");
 		item1.setDescription("first item");
 		item1.setCreated(System.currentTimeMillis());
-		String[] comments = {"comment1", "comment2"};
+		ArrayList<String> comments = new ArrayList<String>();
+		comments.add("comment1");
+		comments.add("comment2");
 		item1.setComments(comments);
 		Item item2 = new Item();
 		item2.setId("2" + System.currentTimeMillis());
@@ -57,11 +64,11 @@ public class TrackerTest {
 		Item item = tracker.add(item1);
 		item = tracker.add(item2);
 		item = tracker.add(item3);
-		Item[] result = tracker.getItems();
-        Item[] expected = new Item[100];
-		expected[0] = item1;
-		expected[1] = item2;
-		expected[2] = item3;
+		ArrayList<Item> result = tracker.getItems();
+		ArrayList<Item> expected = new ArrayList<Item>();
+		expected.add(item1);
+		expected.add(item2);
+		expected.add(item3);
         assertThat(result, is(expected));
     }
 	/**
@@ -75,7 +82,9 @@ public class TrackerTest {
 		item1.setName("first");
 		item1.setDescription("first item");
 		item1.setCreated(System.currentTimeMillis());
-		String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
 		item1.setComments(comments);
 		Item item2 = new Item();
 		item2.setId("2" + System.currentTimeMillis());
@@ -89,20 +98,22 @@ public class TrackerTest {
 		item3.setDescription("third item");
 		item3.setCreated(System.currentTimeMillis());
 		item3.setComments(comments);
-		Item[] expected = new Item[100];
-		expected[0] = item1;
-		expected[1] = item2;
-		expected[2] = item3;
+        ArrayList<Item> expected = new ArrayList<Item>();
+        expected.add(item1);
+        expected.add(item2);
+        expected.add(item3);
 		tracker.setItems(expected);
-		tracker.setIndex(3);
 		item2.setName("new second");
 		item2.setDescription("new second item");
 		item2.setCreated(System.currentTimeMillis());
-		String[] newcomments = {"comment1", "comment2", "comment3"};
+        ArrayList<String> newcomments = new ArrayList<String>();
+        newcomments.add("comment1");
+        newcomments.add("comment2");
+        newcomments.add("comment3");
 		item2.setComments(newcomments);
 		tracker.update(item2);
-		expected[1] = item2;
-		Item[] result = tracker.getItems();
+		expected.add(1, item2);
+		ArrayList<Item> result = tracker.getItems();
 		assertThat(result, is(expected));
 	}
 	/**
@@ -116,7 +127,9 @@ public class TrackerTest {
 		item1.setName("first");
 		item1.setDescription("first item");
 		item1.setCreated(System.currentTimeMillis());
-		String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
 		item1.setComments(comments);
 		Item item2 = new Item();
 		item2.setId("2" + System.currentTimeMillis());
@@ -130,14 +143,13 @@ public class TrackerTest {
 		item3.setDescription("third item");
 		item3.setCreated(System.currentTimeMillis());
 		item3.setComments(comments);
-		Item[] items = new Item[100];
-		items[0] = item1;
-		items[1] = item2;
-		items[2] = item3;
+		ArrayList<Item> items = new ArrayList<Item>();
+		items.add(item1);
+		items.add(item2);
+		items.add(item3);
 		tracker.setItems(items);
-		tracker.setIndex(3);
 		Item result = tracker.findById(item2.getId());
-		Item expected = items[1];
+		Item expected = items.get(1);
 		assertThat(result, is(expected));
 	}
 	/**
@@ -151,7 +163,9 @@ public class TrackerTest {
 		item1.setName("first");
 		item1.setDescription("first item");
 		item1.setCreated(System.currentTimeMillis());
-		String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
 		item1.setComments(comments);
 		Item item2 = new Item();
 		item2.setId("2" + System.currentTimeMillis());
@@ -165,15 +179,16 @@ public class TrackerTest {
 		item3.setDescription("third item");
 		item3.setCreated(System.currentTimeMillis());
 		item3.setComments(comments);
-		Item[] items = new Item[100];
-		items[0] = item1;
-		items[1] = item2;
-		items[2] = item3;
+		ArrayList<Item> items = new ArrayList<>();
+		items.add(item1);
+		items.add(item2);
+		items.add(item3);
 		tracker.setItems(items);
-		tracker.setIndex(3);
-		Item[] result = tracker.findByName("second");
-		Item[] expected = {item2, item3};
-		assertThat(result, is(expected));
+		ArrayList<Item> result = tracker.findByName("second");
+		ArrayList<Item> expected = new ArrayList<>();
+		expected.add(item2);
+		expected.add(item3);
+        assertThat(result, is(expected));
 	}
 	/**
 	* Test for delete method.
@@ -186,7 +201,9 @@ public class TrackerTest {
 		item1.setName("first");
 		item1.setDescription("first item");
 		item1.setCreated(System.currentTimeMillis());
-		String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
 		item1.setComments(comments);
 		Item item2 = new Item();
 		item2.setId("2" + System.currentTimeMillis());
@@ -200,17 +217,16 @@ public class TrackerTest {
 		item3.setDescription("third item");
 		item3.setCreated(System.currentTimeMillis());
 		item3.setComments(comments);
-		Item[] items = new Item[100];
-		items[0] = item1;
-		items[1] = item2;
-		items[2] = item3;
+		ArrayList<Item> items = new ArrayList<Item>();
+		items.add(item1);
+		items.add(item2);
+		items.add(item3);
 		tracker.setItems(items);
-		tracker.setIndex(3);
 		tracker.delete(item2.getId());
-		Item[] result = tracker.getItems();
-		Item[] expected = new Item[100];
-		expected[0] = item1;
-		expected[1] = item3;
+		ArrayList<Item> result = tracker.getItems();
+		ArrayList<Item> expected = new ArrayList<>();
+		expected.add(item1);
+		expected.add(item3);
 		assertThat(result, is(expected));
 	}
 	/**
@@ -224,7 +240,9 @@ public class TrackerTest {
 		item1.setName("first");
 		item1.setDescription("first item");
 		item1.setCreated(System.currentTimeMillis());
-		String[] comments = {"comment1", "comment2"};
+        ArrayList<String> comments = new ArrayList<String>();
+        comments.add("comment1");
+        comments.add("comment2");
 		item1.setComments(comments);
 		Item item2 = new Item();
 		item2.setId("2" + System.currentTimeMillis());
@@ -238,14 +256,13 @@ public class TrackerTest {
 		item3.setDescription("third item");
 		item3.setCreated(System.currentTimeMillis());
 		item3.setComments(comments);
-		Item[] items = new Item[100];
-		items[0] = item1;
-		items[1] = item2;
-		items[2] = item3;
+		ArrayList<Item> items = new ArrayList<>();;
+		items.add(item1);
+		items.add(item2);
+		items.add(item3);
 		tracker.setItems(items);
-		tracker.setIndex(3);
-		Item[] result = tracker.getAll();
-		Item[] expected = {item1, item2, item3};
+		ArrayList<Item> result = tracker.getAll();
+        ArrayList<Item> expected = items;
 		assertThat(result, is(expected));
 	}
 }

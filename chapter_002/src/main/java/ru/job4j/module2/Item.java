@@ -1,4 +1,7 @@
 package ru.job4j.module2;
+
+import java.util.ArrayList;
+
 /**
  *Class Item решение задачи второго модуля.
  *@author Tatyana Belova
@@ -24,7 +27,7 @@ public class Item {
 	/**
 	*комментарии.
 	*/
-	private String[] comments;
+	private ArrayList<String> comments;
 	/**
 	*метод возвращает ключ.
 	*@return id
@@ -57,7 +60,7 @@ public class Item {
 	*метод возвращает комментарии.
 	*@return comments
 	*/
-	public String[] getComments() {
+	public ArrayList<String> getComments() {
 		return this.comments;
 	}
 	/**
@@ -92,7 +95,7 @@ public class Item {
 	*метод устанавливает комментарии.
 	*@param comments - comments
 	*/
-	public void setComments(String[] comments) {
+	public void setComments(ArrayList<String> comments) {
 		this.comments = comments;
 	}
 }

@@ -1,5 +1,6 @@
 package ru.job4j.module2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -28,7 +29,7 @@ public class MenuTracker {
     /**
      * массив действий пользователя.
      */
-    private UserAction[] actions = new UserAction[6];
+    private ArrayList<UserAction> actions = new ArrayList<>(6);
 
     /**
      * текущая позиция.
@@ -38,7 +39,7 @@ public class MenuTracker {
     /**
      * номер последнего пункта меню.
      */
-    private int maxvalue = actions.length - 1;
+
 
     /**
      * метод возвращает maxvalue.
@@ -46,7 +47,7 @@ public class MenuTracker {
      * @return maxvalue
      */
     public int getMaxvalue() {
-        return this.maxvalue;
+        return this.actions.size() - 1;
     }
 
     /**
@@ -75,12 +76,12 @@ public class MenuTracker {
      * заполнение массива actions.
      */
     public void fillActions() {
-        this.actions[position] = this.new AddItem("Add item", position++);
-        this.actions[position] = new MenuTracker.FindItemById("Find item by id", position++);
-        this.actions[position] = new EditItem("Edit item", position++);
-        this.actions[position] = new DeleteItem("Delete item", position++);
-        this.actions[position] = new FindByName("Find item by name", position++);
-        this.actions[position] = new ShowAll("Show all", position++);
+        this.actions.add(this.new AddItem("Add item", position++));
+        this.actions.add(new MenuTracker.FindItemById("Find item by id", position++)) ;
+        this.actions.add(new EditItem("Edit item", position++));
+        this.actions.add(new DeleteItem("Delete item", position++));
+        this.actions.add(new FindByName("Find item by name", position++));
+        this.actions.add(new ShowAll("Show all", position++));
     }
 
     /**
@@ -98,7 +99,7 @@ public class MenuTracker {
      * выбор пользователя.
      */
     public void select(int key) {
-        this.actions[key].execute(this.input, this.output, this.tracker);
+        this.actions.get(key).execute(this.input, this.output, this.tracker);
     }
 
     private class AddItem extends BaseAction {
@@ -120,14 +121,13 @@ public class MenuTracker {
             item.setDescription(input.ask("Input item's description "));
             item.setCreated(System.currentTimeMillis());
             item.setId("" + System.currentTimeMillis());
-            String[] forcomments = new String[10];
-            int i = 0;
+            ArrayList<String> forcomments = new ArrayList<String>();
             String end;
             do {
-                forcomments[i++] = input.ask("Input item's comment ");
+                forcomments.add(input.ask("Input item's comment "));
                 end = input.ask("Is it all? (y/n) ");
             } while (end.equals("n"));
-            item.setComments(Arrays.copyOf(forcomments, i));
+            item.setComments(forcomments);
             item = tracker.add(item);
 
 
@@ -208,14 +208,14 @@ class EditItem extends BaseAction {
             item.setName(input.ask("Input item's new name "));
             item.setDescription(input.ask("Input item's new description "));
             item.setCreated(System.currentTimeMillis());
-            String[] forcomments = new String[10];
-            int i = 0;
+            ArrayList<String> forcomments = new ArrayList<String>();
+
             String end;
             do {
-                forcomments[i++] = input.ask("Input item's new comment ");
+                forcomments.add(input.ask("Input item's new comment "));
                 end = input.ask("Is it all? (y/n) ");
             } while (end.equals("n"));
-            item.setComments(Arrays.copyOf(forcomments, i));
+            item.setComments(forcomments);
             tracker.update(item);
         }
     }
