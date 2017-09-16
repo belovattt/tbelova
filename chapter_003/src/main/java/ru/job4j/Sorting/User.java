@@ -45,4 +45,11 @@ public class User implements Comparable<User> {
     public String toString() {
         return this.name + this.age;
     }
+
+    public String getName() {
+        return name;
+    }
+    public int getAge() {
+        return age;
+    }
 }
