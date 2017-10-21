@@ -2,6 +2,7 @@ package ru.job4j.iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
 /**
  * Class EvenIterator реализует итератор, возвращающий только четные числа из одномерного массива.
  *
@@ -33,6 +34,7 @@ public class EvenIterator implements Iterator {
     /**
      * Конструктор обнуляет текущую позицию итератора.
      * Поиска элементов еще не было.
+     *
      * @param numbers - массив целых чисел
      */
     EvenIterator(int[] numbers) {
@@ -56,16 +58,21 @@ public class EvenIterator implements Iterator {
     @Override
     public boolean hasNext() {
         boolean result = false;
-        for (int i = this.pointer; i < this.numbers.length; i++){
-            if (this.numbers[i] % 2 == 0) {
-                result = true;
-                this.pointer = i;
-                break;
+        //если для такой позиции итератора hasNext() уже вызывался
+        if (this.wasHasNext) {
+            result = hasNextReturnTrue;
+        } else {
+            for (int i = this.pointer; i < this.numbers.length; i++) {
+                if (this.numbers[i] % 2 == 0) {
+                    result = true;
+                    this.pointer = i;
+                    break;
+                }
             }
+            //чтобы второй раз не ходить
+            this.wasHasNext = true;
+            this.hasNextReturnTrue = result;
         }
-        //чтобы второй раз не ходить
-        this.wasHasNext = true;
-        this.hasNextReturnTrue = result;
         return result;
     }
 
@@ -74,12 +81,11 @@ public class EvenIterator implements Iterator {
      *
      * @return the next element in the iteration
      * @throws NoSuchElementException if the iteration has no more elements
-     * Метод проверяет, выполнялся ли метод hasNext() для текущей позиции итератора
-     * если выполнялся, то
-     * если результат hasNext() был false, выбрасывает исключение,
-     * если true - записывает в result найденный элемент и сдвигает pointer на одну позицию
-     * если не выполнялся, то выполняет hasNext()
-     *
+     *                                Метод проверяет, выполнялся ли метод hasNext() для текущей позиции итератора
+     *                                если выполнялся, то
+     *                                если результат hasNext() был false, выбрасывает исключение,
+     *                                если true - записывает в result найденный элемент и сдвигает pointer на одну позицию
+     *                                если не выполнялся, то выполняет hasNext()
      */
     @Override
     public Integer next() throws NoSuchElementException {
@@ -98,11 +104,10 @@ public class EvenIterator implements Iterator {
             } else {
                 throw new NoSuchElementException("No even elements");
             }
-            //тут еще не искали
-            this.wasHasNext = false;
-            this.hasNextReturnTrue = false;
         }
-
+        //тут еще не искали
+        this.wasHasNext = false;
+        this.hasNextReturnTrue = false;
         return result;
     }
 }

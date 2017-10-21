@@ -84,6 +84,16 @@ public class EvenIteratorTest {
         }
         assertTrue(result);
     }
+    @Test
+    public void sequentialHasNextInvocationDoesntAffectRetrievalOrder () {
+        int[] numbers = {1, 2, 3, 4, 5, 6, 7};
+        Iterator it = new EvenIterator(numbers);
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(2));
+        assertThat(it.next(), is(4));
+        assertThat(it.next(), is(6));
+    }
 
 
 
