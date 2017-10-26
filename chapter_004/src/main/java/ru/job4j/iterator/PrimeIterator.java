@@ -22,10 +22,6 @@ public class PrimeIterator implements Iterator {
      * pointer содержит его номер, чтобы не ходить по массиву несколько раз
      */
     private int pointer;
-    /**
-     * сюда все итераторы будут записывать простые числа, чтобы не проверять второй раз
-     */
-    static HashSet<Integer> primeSet = new HashSet<>();
 
     /**
      * Конструктор обнуляет текущую позицию итератора.
@@ -84,20 +80,17 @@ public class PrimeIterator implements Iterator {
             result = false;
         } else {
             double sqrt = Math.pow(element, 0.5);
-            if (! primeSet.contains(element)) {
-                int i = 2;
-                while (i <= sqrt) {
-                    if (element % i == 0) {
-                        result = false;
-                        break;
-                    }
-                    i++;
+            int i = 2;
+            while (i <= sqrt) {
+                if (element % i == 0) {
+                    result = false;
+                    break;
                 }
-                if (result) {
-                    primeSet.add(element);
-                }
+                i++;
             }
+
         }
+
         return result;
     }
 }
