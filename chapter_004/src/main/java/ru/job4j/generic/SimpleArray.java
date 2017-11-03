@@ -1,9 +1,10 @@
 package ru.job4j.generic;
 
 
+import java.util.Arrays;
 
 public class SimpleArray<E> {
-     /**
+    /**
      * номер первого пустого элемента
      */
     private int index = 0;
@@ -13,12 +14,11 @@ public class SimpleArray<E> {
         this.arr = new Object[size];
     }
 
-    public void add(E elem) throws SimpleArrayIsFullException {
+    public void add(E elem) {
         if (index == this.arr.length) {
-            throw new SimpleArrayIsFullException("Array is full");
-        } else {
-            this.arr[index++] = elem;
+            this.arr = Arrays.copyOf(this.arr, this.arr.length * 2);
         }
+        this.arr[index++] = elem;
     }
 
     public E get(int position) throws OutOfSimpleArrayRangeException {
@@ -49,5 +49,8 @@ public class SimpleArray<E> {
             index--;
         }
         return result;
+    }
+    public int getLength() {
+        return this.arr.length;
     }
 }
