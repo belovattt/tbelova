@@ -6,6 +6,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class RoleStoreTest {
+
     @Test
     /**
      * если изначально определить размерность 2 и добавить 3 элемента, то все элементы будут добавлены

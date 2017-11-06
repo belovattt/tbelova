@@ -4,7 +4,7 @@ package ru.job4j.generic;
  * класс содержим методы, общие для списков объеков типа Base
  * @param <T>
  */
-public abstract class AbstractStore<T extends Base>  {
+public abstract class AbstractStore<T extends Base> implements Store<T>  {
     /**
      * структура для хранения данных
      */
@@ -26,7 +26,7 @@ public abstract class AbstractStore<T extends Base>  {
      */
 
     public T add(T model) {
-        this.userArray.add(model);
+        this.userArray.add( model);
         return model;
     }
 
@@ -37,7 +37,7 @@ public abstract class AbstractStore<T extends Base>  {
      */
 
     public T update(T model) {
-        Base result = null;
+        T result = null;
         try {
             for (int i = 0; i < this.userArray.getLength(); i++) {
                 if (this.userArray.get(i).getId().equals(model.getId())) {
@@ -49,7 +49,7 @@ public abstract class AbstractStore<T extends Base>  {
         } catch (OutOfSimpleArrayRangeException oosare) {
 
         }
-        return (T) result;
+        return result;
     }
 
     /**

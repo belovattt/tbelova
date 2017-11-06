@@ -1,19 +1,19 @@
 package ru.job4j.generic;
 
-public interface Store <Base> {
+public interface Store <T extends  Base> {
     /**
      * метод добавляет объект model в структуру
      * @param model - model
      * @return model
      */
-    Base add(Base model);
+    T add(T model);
 
     /**
      * метод обновляет объект model в структуре
      * @param model - model
      * @return model
      */
-    Base update(Base model);
+    T update(T model);
 
     /**
      * метод удаляет объект из структуры

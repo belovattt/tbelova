@@ -9,10 +9,7 @@ public class User extends Base {
      * количество созданных объектов для генерации уникального id
      */
     private static  Integer number = 0;
-    /**
-     * id пользователя
-     */
-    private String id;
+
     /**
      * имя пользолвателя
      */
@@ -24,7 +21,7 @@ public class User extends Base {
      * @param name - имя пользователя
      */
     User(String id, String name) {
-        this.id = id;
+        this.setId(id);
         this.name = name;
     }
 
@@ -37,15 +34,7 @@ public class User extends Base {
         return number.toString();
     }
 
-    @Override
-    String getId() {
-        return this.id;
-    }
 
-    @Override
-    void setId(String id) {
-        this.id = id;
-    }
 
     /**
      * метод возвращает имя пользователя

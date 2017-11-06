@@ -5,11 +5,11 @@ package ru.job4j.generic;
  */
 public class Role extends Base{
     private static Integer numberRole = 0;
-    private String idRole;
+
 
     private String status;
-    public Role(String idRole, String status) {
-        this.idRole = idRole;
+    public Role(String id, String status) {
+        this.setId(id);
         this.status = status;
     }
     public static String getNewId() {
@@ -17,15 +17,7 @@ public class Role extends Base{
         return numberRole.toString();
     }
 
-    @Override
-    String getId() {
-        return this.idRole;
-    }
 
-    @Override
-    void setId(String idRole) {
-        this.idRole = idRole;
-    }
     public String getStatus() {
         return this.status;
     }

@@ -22,6 +22,7 @@ public class UserStoreTest {
         userStore.add(user3);
         assertThat(userStore.toString(), is(user1.getId() + "-qqq " + user2.getId() + "-www " + user3.getId() + "-eee "));
     }
+
     @Test
     /**
      * если из массива, содержащего три элемента, удалить первый, два оставшихся буду сдвинуты в начало
