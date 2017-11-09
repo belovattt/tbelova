@@ -8,6 +8,14 @@ import java.util.NoSuchElementException;
  * @param <E> - тип данных
  */
 public class DinList<E> implements Iterable<E> {
+    public void setHead(ListElement<E> head) {
+        this.head = head;
+    }
+
+    public void setTail(ListElement<E> tail) {
+        this.tail = tail;
+    }
+
     /**
      * указатель на начало списка.
      */
