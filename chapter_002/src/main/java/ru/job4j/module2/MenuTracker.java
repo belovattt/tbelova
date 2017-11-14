@@ -36,7 +36,7 @@ public class MenuTracker {
      */
     private int position = 0;
 
-    /**
+     /**
      * номер последнего пункта меню.
      */
 
