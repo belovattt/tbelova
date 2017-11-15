@@ -1,0 +1,74 @@
+package ru.job4j.set;
+
+import java.util.Arrays;
+
+/**
+ * Класс реализует коллекцию типа Set на базе хэш-таблицы
+ * @param <E> - тип данных в коллекции
+ */
+public class SimpleHashSet<E> {
+    /**
+     * массив для хранения элементов коллекции
+     */
+    private Object[] arr;
+
+    /**
+     * конструктор.
+     * массив arr заполнеятся null
+     */
+    public SimpleHashSet() {
+        this.arr = new Object[100];
+        Arrays.fill(this.arr, null);
+    }
+
+    /**
+     * метод определяет, принадлежит ли элемент множеству
+     * @param e - элемент
+     * @return true, если принадлежит
+     */
+
+    public boolean contains(E e) {
+        return (this.arr[hC(e)] == null) ? false : true;
+
+    }
+
+    /**
+     * метод добавляет элемент el в множество.
+     * @param e - элемент
+     * @return false - если такой элемент в множестве уже есть
+     */
+    public boolean add(E e) {
+        boolean result = true;
+        if (this.contains(e)) {
+            result = false;
+        } else {
+
+            this.arr[hC(e)] = e;
+        }
+        return result;
+    }
+
+    /**
+     * метод удаляет элемент el из множества.
+     * @param e - el
+     * @return false, если такого элемента в множестве не было
+     */
+    public boolean remove(E e) {
+        boolean result = false;
+        if (this.contains(e)) {
+            this.arr[e.hashCode() % 100] = null;
+            result = true;
+        }
+        return result;
+    }
+
+    /**
+     * метод вычисляет код элемента для хэш-таблицы.
+     * @param e - элемент
+     * @return код
+     */
+    private static int hC(Object e) {
+        return Math.abs(e.hashCode() % 100);
+    }
+
+}
