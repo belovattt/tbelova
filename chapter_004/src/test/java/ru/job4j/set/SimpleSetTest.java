@@ -12,6 +12,7 @@ import static org.hamcrest.core.Is.is;
  * тесты для SimpleSet
  */
 public class SimpleSetTest {
+
     /**
      * тест для метода add.
      * добавляем 1

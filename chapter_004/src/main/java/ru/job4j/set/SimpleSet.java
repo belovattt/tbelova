@@ -1,5 +1,7 @@
 package ru.job4j.set;
 
+import ru.job4j.list.DinArray;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -9,15 +11,7 @@ import java.util.Iterator;
  * @param <E>
  */
 
-public class SimpleSet<E> implements Iterable<E> {
-    /**
-     * массив для хранения элементов множества.
-     */
-    private Object[] arr;
-    /**
-     * номер первого свободного элемента массива.
-     */
-    private int position;
+public class SimpleSet<E> extends DinArray<E> {
 
     /**
      * конструктор.
@@ -25,50 +19,26 @@ public class SimpleSet<E> implements Iterable<E> {
      * @param size - начальное количество элементов множества
      */
     public SimpleSet(int size) {
-        this.position = 0;
-        this.arr = new Object[size];
+        super(size);
     }
 
-    /**
-     * метод возвращает заполненную часть массива.
-     *
-     * @return массив
-     */
-    public E[] getArr() {
-        return (E[]) Arrays.copyOf(this.arr, position);
-    }
 
-    /**
-     * Returns an iterator over elements of type {@code T}.
-     *
-     * @return an Iterator.
-     */
-    @Override
-    public Iterator<E> iterator() {
-        return new SimpleSetIterator(this);
-    }
 
     /**
      * метод вставляет элемент value в множество.
-     * если такой элемент уже есть, выбрасывается исключение
+     *  если такой элемент уже есть, выбрасывается исключение
      *
      * @param value - value
      * @throws ValueAlreadyExistException
      */
-    void add(E value) throws ValueAlreadyExistException {
-        int index = 0;
-
-        while (index < this.position) {
-            E el = (E) this.arr[index];
+    public E add(E value) throws ValueAlreadyExistException {
+        Iterator<E> it = this.iterator();
+        for (E el : this) {
             if (el.equals(value)) {
                 throw new ValueAlreadyExistException("This value already exist");
             }
-            index++;
         }
-
-        if (this.position == this.arr.length) {
-            this.arr = Arrays.copyOf(this.arr, this.arr.length * 2);
-        }
-        this.arr[position++] = value;
+        super.add(value);
+        return value;
     }
 }
