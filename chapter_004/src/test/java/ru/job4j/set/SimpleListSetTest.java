@@ -27,23 +27,4 @@ public class SimpleListSetTest {
         assertThat(simpleListSet.getHead().getNext().getData(), is(2));
         simpleListSet.add(1);
     }
-
-    /**
-     * тест для итератора.
-     * добавляем в множество два элемента
-     * третий вызов метода next() вызывает исключение
-     */
-    @Test (expected = NoSuchElementException.class)
-    public void iteratorTest() {
-        SimpleListSet<Integer> simpleListSet = new SimpleListSet();
-
-        simpleListSet.add(1);
-       simpleListSet.add(2);
-        Iterator<Integer> it = simpleListSet.iterator();
-       assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(1));
-        assertThat(it.next(), is(2));
-        assertThat(it.hasNext(), is(false));
-        it.next();
-    }
 }
