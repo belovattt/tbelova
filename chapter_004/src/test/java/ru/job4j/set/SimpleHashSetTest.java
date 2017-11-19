@@ -17,7 +17,7 @@ public class SimpleHashSetTest {
      */
     @Test
     public void addTest() {
-        SimpleHashSet<String> hashSet = new SimpleHashSet<String>();
+        SimpleHashSet<String> hashSet = new SimpleHashSet<String>(10);
         assertThat(hashSet.add("10"), is(true));
         assertThat(hashSet.add("20"), is(true));
         assertThat(hashSet.add("20"), is(false));
@@ -30,7 +30,7 @@ public class SimpleHashSetTest {
      */
     @Test
     public void containsTest() {
-        SimpleHashSet<String> hashSet = new SimpleHashSet<String>();
+        SimpleHashSet<String> hashSet = new SimpleHashSet<String>(10);
         hashSet.add("10");
         assertThat(hashSet.contains("10"), is(true));
         assertThat(hashSet.contains("20"), is(false));
@@ -45,7 +45,7 @@ public class SimpleHashSetTest {
      */
     @Test
     public void removeTest() {
-        SimpleHashSet<String> hashSet = new SimpleHashSet<String>();
+        SimpleHashSet<String> hashSet = new SimpleHashSet<String>(10);
         hashSet.add("10");
         hashSet.add("20");
         assertThat(hashSet.remove("20"), is(true));

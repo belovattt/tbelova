@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * Класс реализует коллекцию типа Set на базе хэш-таблицы
+ *
  * @param <E> - тип данных в коллекции
  */
 public class SimpleHashSet<E> {
@@ -16,13 +17,13 @@ public class SimpleHashSet<E> {
      * конструктор.
      * массив arr заполнеятся null
      */
-    public SimpleHashSet() {
-        this.arr = new Object[100];
-        Arrays.fill(this.arr, null);
+    public SimpleHashSet(int n) {
+        this.arr = new Object[n];
     }
 
     /**
      * метод определяет, принадлежит ли элемент множеству
+     *
      * @param e - элемент
      * @return true, если принадлежит
      */
@@ -34,6 +35,7 @@ public class SimpleHashSet<E> {
 
     /**
      * метод добавляет элемент el в множество.
+     *
      * @param e - элемент
      * @return false - если такой элемент в множестве уже есть
      */
@@ -50,13 +52,14 @@ public class SimpleHashSet<E> {
 
     /**
      * метод удаляет элемент el из множества.
+     *
      * @param e - el
      * @return false, если такого элемента в множестве не было
      */
     public boolean remove(E e) {
         boolean result = false;
         if (this.contains(e)) {
-            this.arr[e.hashCode() % 100] = null;
+            this.arr[this.hC((e))] = null;
             result = true;
         }
         return result;
@@ -64,11 +67,12 @@ public class SimpleHashSet<E> {
 
     /**
      * метод вычисляет код элемента для хэш-таблицы.
+     *
      * @param e - элемент
      * @return код
      */
-    private static int hC(Object e) {
-        return Math.abs(e.hashCode() % 100);
+    private int hC(Object e) {
+        return Math.abs(e.hashCode() % this.arr.length);
     }
 
 }
