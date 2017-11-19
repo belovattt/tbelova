@@ -8,6 +8,7 @@ import java.util.Arrays;
  * @param <E> - тип данных в коллекции
  */
 public class SimpleHashSet<E> {
+
     /**
      * массив для хранения элементов коллекции
      */

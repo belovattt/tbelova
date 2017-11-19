@@ -10,6 +10,7 @@ import static org.junit.Assert.assertThat;
  */
 
 public class SimpleHashSetTest {
+
     /**
      * Тест для метода add.
      * если добавляется уникальный элемент, метод возвращает true
