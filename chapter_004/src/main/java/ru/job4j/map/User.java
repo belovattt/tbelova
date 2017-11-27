@@ -69,7 +69,7 @@ public class User {
      * @see Object#equals(Object)
      * @see System#identityHashCode
      */
-   /* @Override
+   @Override
     public int hashCode() {
         int hash = 1;
         hash = hash * 31 + this.name.hashCode();
@@ -77,7 +77,7 @@ public class User {
         hash = hash * 31 + this.birthday.hashCode();
         return hash;
     }
-    */
+
 
     @Override
     public boolean equals(Object o) {

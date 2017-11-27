@@ -15,7 +15,7 @@ public class MapTest {
      * методы hashCode и equals не переопределены
      */
     @Test
-    public void whenNotOverrideHashCode() {
+    public void whenOverrideEqualsAndHashCode() {
         Calendar c = new GregorianCalendar(2017, 11, 21);
         User user1 = new User("Vasya", 2, c);
         User user2 = new User("Vasya", 2, c);
