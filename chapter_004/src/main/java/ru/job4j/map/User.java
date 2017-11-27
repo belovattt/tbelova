@@ -33,6 +33,7 @@ public class User {
         this.birthday = birthday;
     }
 
+
     /**
      * Returns a hash code value for the object. This method is
      * supported for the benefit of hash tables such as those provided by
@@ -68,7 +69,7 @@ public class User {
      * @see Object#equals(Object)
      * @see System#identityHashCode
      */
-    @Override
+   /* @Override
     public int hashCode() {
         int hash = 1;
         hash = hash * 31 + this.name.hashCode();
@@ -76,4 +77,19 @@ public class User {
         hash = hash * 31 + this.birthday.hashCode();
         return hash;
     }
+    */
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (children != user.children) return false;
+        if (!name.equals(user.name)) return false;
+        return birthday.equals(user.birthday);
+    }
+
+
 }
