@@ -15,14 +15,14 @@ public class MyHashMap<K, V> implements Iterable<V> {
      * метод возвращает массив значений
      * @return массив
      */
-    public Object[] getTable() {
+    public MyHashMapElement[] getTable() {
         return table;
     }
 
     /**
      * массив для хранения объектов.
      */
-    private Object[] table;
+    private MyHashMapElement[] table;
 
     /**
      * метод возвращает размерность массива значений.
@@ -52,27 +52,27 @@ public class MyHashMap<K, V> implements Iterable<V> {
      * коэффициент заполнения 0.75
      */
     public MyHashMap() {
-        this.table = new Object[this.size];
+        this.table = new MyHashMapElement[this.size];
     }
 
     /**
      * конструктор для карты с заданным количеством элементов.
-     * @param size - количество элементов
+     * @param power - число для определения размерности массива по формуле pow(2, power)
      */
-    public MyHashMap(int size) {
-        this.size = size;
-        this.table = new Object[this.size];
+    public MyHashMap(int power) {
+        this.size = (int) Math.pow(2, power);
+        this.table = new MyHashMapElement[this.size];
     }
 
     /**
      * конструктор для карты с заданным количеством элементов и заданным коэффициентом заполнения.
-     * @param size - количество элементов
+     * @param power - число для определения размерности массива по формуле pow(2, power)
      * @param capacity - коэффициент заполнения
      */
-    public MyHashMap(int size, double capacity) {
-        this.size = size;
+    public MyHashMap(int power, double capacity) {
+        this.size = (int) Math.pow(2, power);
         this.capacity = capacity;
-        this.table = new Object[this.size];
+        this.table = new MyHashMapElement[this.size];
     }
 
     /**
@@ -86,10 +86,18 @@ public class MyHashMap<K, V> implements Iterable<V> {
         boolean result = false;
         if (this.amount > this.capacity * this.size) {
             this.size *= 2;
-            this.table = Arrays.copyOf(this.table, this.size);
+            MyHashMapElement[] newTable = new MyHashMapElement[this.size];
+            for (int i = 0; i < this.table.length; i++) {
+                if (this.table[i] != null) {
+                 newTable[this.tableIndex((K) this.table[i].getKey())] = this.table[i];
+                }
+            }
+            this.table = newTable;
         }
         if (this.table[this.tableIndex(key)] == null) {
-            this.table[this.tableIndex(key)] = value;
+            MyHashMapElement el = new MyHashMapElement(key, value);
+            this.table[this.tableIndex(key)] = el;
+
             this.amount++;
             result = true;
         }
@@ -107,7 +115,7 @@ public class MyHashMap<K, V> implements Iterable<V> {
         if (this.table[this.tableIndex(key)] == null) {
             throw new NoSuchElementException((""));
         }
-        return ((V) this.table[this.tableIndex(key)]);
+        return ((V) this.table[this.tableIndex(key)].getValue());
     }
 
     /**
@@ -151,4 +159,5 @@ public class MyHashMap<K, V> implements Iterable<V> {
     public Iterator<V> iterator() {
         return new MyHashMapIterator<K, V>(this);
     }
+
 }

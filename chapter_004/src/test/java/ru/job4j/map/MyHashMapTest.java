@@ -29,7 +29,7 @@ public class MyHashMapTest {
         String result = "";
         for (int i = 0; i < myHashMap.getSize(); i++) {
             if (myHashMap.getTable()[i] != null) {
-                result = (String) myHashMap.getTable()[i];
+                result = (String) myHashMap.getTable()[i].getValue();
                 break;
             }
         }
@@ -49,7 +49,7 @@ public class MyHashMapTest {
         String result = "";
         for (int i = 0; i < myHashMap.getSize(); i++) {
             if (myHashMap.getTable()[i] != null) {
-                result = (String) myHashMap.getTable()[i];
+                result = (String) myHashMap.getTable()[i].getValue();
                 break;
             }
         }

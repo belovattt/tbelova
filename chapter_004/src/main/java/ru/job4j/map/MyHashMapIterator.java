@@ -58,7 +58,7 @@ public class MyHashMapIterator<K, V> implements Iterator<V> {
     public V next() throws NoSuchElementException {
         Object result;
         if (this.hasNext()) {
-            result = myHashMap.getTable()[this.number];
+            result = myHashMap.getTable()[this.number].getValue();
             this.number++;
         } else {
             throw new NoSuchElementException("");
