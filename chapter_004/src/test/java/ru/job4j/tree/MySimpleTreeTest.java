@@ -54,6 +54,7 @@ public class MySimpleTreeTest {
 
 
     }
+
     /**
      * Если родительский элемент не существует, метод add возвращает false.
      */
@@ -68,7 +69,7 @@ public class MySimpleTreeTest {
     /**
      * Метод тестирует итератор.
      */
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void iteratorTest() {
         MySimpleTree<Integer> tree = new MySimpleTree<>(1);
         tree.add(1, 2);
@@ -87,6 +88,39 @@ public class MySimpleTreeTest {
         assertThat(it.next(), is(6));
         assertThat(it.hasNext(), is(false));
         it.next();
+    }
 
+    /**
+     * если у каждого элемента не больше двух детей, isBinary возвращает true.
+     */
+    @Test
+    public void whenTreeIsBinaryThenTrue() {
+        MySimpleTree<Integer> tree = new MySimpleTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(3, 4);
+        tree.add(4, 5);
+        tree.add(4, 6);
+        assertThat(
+                tree.isBinary(),
+                is(true)
+        );
+    }
+
+    /**
+     * если у какого-то элемента больше двух детей, isBinary возвращает false.
+     */
+    @Test
+    public void whenTreeIsNotBinaryThenFalse() {
+        MySimpleTree<Integer> tree = new MySimpleTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(4, 6);
+        assertThat(
+                tree.isBinary(),
+                is(false)
+        );
     }
 }

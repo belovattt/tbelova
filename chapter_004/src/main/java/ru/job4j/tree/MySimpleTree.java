@@ -8,11 +8,13 @@ import java.util.Queue;
 
 /**
  * класс реализует дерево на основе интерфейса SimpleTree.
+ *
  * @param <E> - тип значений элементов
  */
 public class MySimpleTree<E extends Comparable<E>> implements SimpleTree {
     /**
      * метод устанавливает ссылку на корень дерева.
+     *
      * @param root - корень
      */
     public void setRoot(Node<E> root) {
@@ -21,6 +23,7 @@ public class MySimpleTree<E extends Comparable<E>> implements SimpleTree {
 
     /**
      * метод возвращает ссылку на корень дерева.
+     *
      * @return root
      */
     public Node<E> getRoot() {
@@ -34,15 +37,18 @@ public class MySimpleTree<E extends Comparable<E>> implements SimpleTree {
 
     /**
      * конструктор.
+     *
      * @param value - значение корня
      */
     public MySimpleTree(E value) {
         this.root = new Node<E>(value);
     }
+
     /**
      * метод добавляет элемент со значением child в список элемента со значением value.
+     *
      * @param parent - родитель
-     * @param child - дочерний элемент
+     * @param child  - дочерний элемент
      * @return true, если добавление прошло успешно
      */
     @Override
@@ -59,6 +65,7 @@ public class MySimpleTree<E extends Comparable<E>> implements SimpleTree {
 
     /**
      * метод находит элемент со значением value.
+     *
      * @param value - значение
      * @return ссылка на элемент
      */
@@ -90,5 +97,25 @@ public class MySimpleTree<E extends Comparable<E>> implements SimpleTree {
     @Override
     public Iterator<E> iterator() {
         return new MySimpleTreeIterator(this);
+    }
+
+    /**
+     * метод проверяет, является ли дерево бинарным.
+     *
+     * @return true, если является
+     */
+    public boolean isBinary() {
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this.root);
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            if (el.leaves().size() > 2) {
+                return false;
+            }
+            for (Node<E> child : el.leaves()) {
+                data.offer(child);
+            }
+        }
+        return true;
     }
 }
