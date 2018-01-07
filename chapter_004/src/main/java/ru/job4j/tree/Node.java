@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Класс реализует один элемент дерева.
+ *
  * @param <E> - тип данных
  */
 public class Node<E> {
@@ -15,6 +16,7 @@ public class Node<E> {
 
     /**
      * метод возвращает данные элемента.
+     *
      * @return value
      */
     public E getValue() {
@@ -28,6 +30,7 @@ public class Node<E> {
 
     /**
      * конструктор.
+     *
      * @param value - данные
      */
     public Node(final E value) {
@@ -37,6 +40,7 @@ public class Node<E> {
 
     /**
      * метод добавляет элемент к списку элементов.
+     *
      * @param child - добавляемый элемент
      */
     public void add(Node<E> child) {
@@ -45,6 +49,7 @@ public class Node<E> {
 
     /**
      * метод возвращает список элементов.
+     *
      * @return список
      */
     public List<Node<E>> leaves() {
@@ -53,10 +58,23 @@ public class Node<E> {
 
     /**
      * метод сравнивает значение value элемента с that.
+     *
      * @param that
      * @return true, если равны
      */
     public boolean eqValue(Comparable<E> that) {
         return this.value.equals(that);
+    }
+
+    public boolean contains(Comparable<E> child) {
+        boolean result = false;
+        for (Node<E> node : this.children) {
+            if (node.eqValue(child)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+
     }
 }

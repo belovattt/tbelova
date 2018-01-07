@@ -9,15 +9,15 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * класс для тестирования методов класса MySimpleTree.
+ * класс для тестирования методов класса PrimitiveTree.
  */
-public class MySimpleTreeTest {
+public class PrimitiveTreeTest {
     /**
      * если элемент существует, то метод findBy возвращает ненулевую ссылку.
      */
     @Test
     public void when6ElFindLastThen6() {
-        MySimpleTree<Integer> tree = new MySimpleTree<>(1);
+        PrimitiveTree<Integer> tree = new PrimitiveTree<>(1);
         tree.add(1, 2);
         tree.add(1, 3);
         tree.add(1, 4);
@@ -34,7 +34,7 @@ public class MySimpleTreeTest {
      */
     @Test
     public void when6ElFindNotExitThenOptionEmpty() {
-        MySimpleTree<Integer> tree = new MySimpleTree<>(1);
+        PrimitiveTree<Integer> tree = new PrimitiveTree<>(1);
         tree.add(1, 2);
         assertThat(
                 tree.findBy(7).isPresent(),
@@ -47,7 +47,7 @@ public class MySimpleTreeTest {
      */
     @Test
     public void when2AddThenTrue() {
-        MySimpleTree<Integer> tree = new MySimpleTree<>(1);
+        PrimitiveTree<Integer> tree = new PrimitiveTree<>(1);
         assertThat(tree.add(1, 2), is(true));
         assertThat(tree.add(1, 3), is(true));
         assertThat(tree.add(2, 4), is(true));
@@ -60,7 +60,7 @@ public class MySimpleTreeTest {
      */
     @Test
     public void when5AddThenFalse() {
-        MySimpleTree<Integer> tree = new MySimpleTree<>(1);
+        PrimitiveTree<Integer> tree = new PrimitiveTree<>(1);
         assertThat(tree.add(1, 2), is(true));
         assertThat(tree.add(1, 3), is(true));
         assertThat(tree.add(5, 4), is(false));
@@ -71,7 +71,7 @@ public class MySimpleTreeTest {
      */
     @Test(expected = NoSuchElementException.class)
     public void iteratorTest() {
-        MySimpleTree<Integer> tree = new MySimpleTree<>(1);
+        PrimitiveTree<Integer> tree = new PrimitiveTree<>(1);
         tree.add(1, 2);
         tree.add(1, 3);
         tree.add(1, 4);
@@ -95,7 +95,7 @@ public class MySimpleTreeTest {
      */
     @Test
     public void whenTreeIsBinaryThenTrue() {
-        MySimpleTree<Integer> tree = new MySimpleTree<>(1);
+        PrimitiveTree<Integer> tree = new PrimitiveTree<>(1);
         tree.add(1, 2);
         tree.add(1, 3);
         tree.add(3, 4);
@@ -112,7 +112,7 @@ public class MySimpleTreeTest {
      */
     @Test
     public void whenTreeIsNotBinaryThenFalse() {
-        MySimpleTree<Integer> tree = new MySimpleTree<>(1);
+        PrimitiveTree<Integer> tree = new PrimitiveTree<>(1);
         tree.add(1, 2);
         tree.add(1, 3);
         tree.add(1, 4);
@@ -122,5 +122,16 @@ public class MySimpleTreeTest {
                 tree.isBinary(),
                 is(false)
         );
+    }
+    /**
+     * Если родительский элемент уже содержит дочерний элемент, метод add возвращает false.
+     */
+    @Test
+    public void whenChildExistsThenFalse() {
+        PrimitiveTree<Integer> tree = new PrimitiveTree<>(1);
+        assertThat(tree.add(1, 2), is(true));
+        assertThat(tree.add(1, 3), is(true));
+        assertThat(tree.add(2, 4), is(true));
+        assertThat(tree.add(1, 3), is(false));
     }
 }

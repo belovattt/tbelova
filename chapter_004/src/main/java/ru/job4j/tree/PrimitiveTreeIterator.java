@@ -6,14 +6,14 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 
 /**
- * метод реализует итератор для объектов класса MySimpleTree.
+ * метод реализует итератор для объектов класса PrimitiveTree.
  * @param <E>- тип элементов
  */
-public class MySimpleTreeIterator<E extends Comparable<E>> implements Iterator<E> {
+public class PrimitiveTreeIterator<E extends Comparable<E>> implements Iterator<E> {
     /**
      * дерево.
      */
-    MySimpleTree<E> mySimpleTree;
+    PrimitiveTree<E> mySimpleTree;
     /**
      * очередь для хранения непросмотренных элементов.
      */
@@ -24,7 +24,7 @@ public class MySimpleTreeIterator<E extends Comparable<E>> implements Iterator<E
      * @param simpleTree - дерево
      */
 
-    public MySimpleTreeIterator(MySimpleTree<E> simpleTree) {
+    public PrimitiveTreeIterator(PrimitiveTree<E> simpleTree) {
 
         this.mySimpleTree = simpleTree;
         this.queue.offer(mySimpleTree.getRoot());

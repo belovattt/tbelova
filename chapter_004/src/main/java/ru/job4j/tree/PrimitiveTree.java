@@ -11,7 +11,7 @@ import java.util.Queue;
  *
  * @param <E> - тип значений элементов
  */
-public class MySimpleTree<E extends Comparable<E>> implements SimpleTree {
+public class PrimitiveTree<E extends Comparable<E>> implements SimpleTree {
     /**
      * метод устанавливает ссылку на корень дерева.
      *
@@ -40,7 +40,7 @@ public class MySimpleTree<E extends Comparable<E>> implements SimpleTree {
      *
      * @param value - значение корня
      */
-    public MySimpleTree(E value) {
+    public PrimitiveTree(E value) {
         this.root = new Node<E>(value);
     }
 
@@ -56,8 +56,12 @@ public class MySimpleTree<E extends Comparable<E>> implements SimpleTree {
         Optional<Node<E>> rsl = this.findBy(parent);
         Node<E> el = new Node<>((E) child);
         if (rsl.isPresent()) {
-            rsl.get().add(el);
-            return true;
+            if (rsl.get().contains(child)) {
+                return false;
+            } else {
+                rsl.get().add(el);
+                return true;
+            }
         } else {
             return false;
         }
@@ -96,7 +100,7 @@ public class MySimpleTree<E extends Comparable<E>> implements SimpleTree {
      */
     @Override
     public Iterator<E> iterator() {
-        return new MySimpleTreeIterator(this);
+        return new PrimitiveTreeIterator(this);
     }
 
     /**
