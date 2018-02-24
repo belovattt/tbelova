@@ -25,7 +25,6 @@ public class CheckStrings {
      this.string1 = string1;
      this.string2 = string2;
    }
-
     /**
      * метод сравнивает строки.
      * @return true, если поля string1 и string2 состоят из одних и тех же символов

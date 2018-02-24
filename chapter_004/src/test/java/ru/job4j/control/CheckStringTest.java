@@ -13,6 +13,7 @@ public class CheckStringTest {
        CheckStrings checkStrings = new CheckStrings("1234", "12345");
         assertThat(checkStrings.check(), is(false));
     }
+
     @Test
     /**
      * если строки состоят из одних и тех же символов, метод вернет true
