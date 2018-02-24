@@ -22,6 +22,7 @@ public class CheckStringTest {
         CheckStrings checkStrings = new CheckStrings("11232", "32211");
         assertThat(checkStrings.check(), is(true));
     }
+
     @Test
     /**
      * если строки состоят из разных символов, метод вернет false
