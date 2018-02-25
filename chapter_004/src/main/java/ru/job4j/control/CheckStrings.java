@@ -33,7 +33,7 @@ public class CheckStrings {
    public boolean check() {
        boolean result = true;
        if (string1.length() != string2.length()) {
-           return false;
+           result = false;
        } else {
            Map<Char, Integer> setOfSymbols = new HashMap<>(256);
            for (int i = 0; i < string1.length(); i++) {
@@ -47,8 +47,9 @@ public class CheckStrings {
            for (int i = 0; i < string2.length(); i++) {
                Char key = new Char(string2.charAt(i));
                if (setOfSymbols.get(key) == null) {
-                   return false;
-               } else {
+                   result = false;
+                   break;
+                   } else {
                    if (setOfSymbols.get(key) == 1) {
                        setOfSymbols.remove(key);
                    } else {

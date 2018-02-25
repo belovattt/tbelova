@@ -5,6 +5,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class CheckStringTest {
+
     @Test
     /**
      * если строки разной длины, метод вернет false

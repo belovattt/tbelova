@@ -33,7 +33,6 @@ public class Char {
     public Char(char symbol) {
         this.symbol = symbol;
     }
-
     /**
      * метод сравнивает this с o
      * @param o - объект
