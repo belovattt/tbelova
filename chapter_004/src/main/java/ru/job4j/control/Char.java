@@ -42,9 +42,7 @@ public class Char {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Char)) return false;
-
         Char aChar = (Char) o;
-
         return symbol == aChar.symbol;
     }
 

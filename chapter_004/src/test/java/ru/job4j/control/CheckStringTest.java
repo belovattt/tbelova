@@ -10,6 +10,7 @@ public class CheckStringTest {
     /**
      * если строки разной длины, метод вернет false
      */
+
     public void ifLengthVariousThenFalse() {
        CheckStrings checkStrings = new CheckStrings("1234", "12345");
         assertThat(checkStrings.check(), is(false));
@@ -19,6 +20,7 @@ public class CheckStringTest {
     /**
      * если строки состоят из одних и тех же символов, метод вернет true
      */
+
     public void if11232And32211ThenTrue() {
         CheckStrings checkStrings = new CheckStrings("11232", "32211");
         assertThat(checkStrings.check(), is(true));

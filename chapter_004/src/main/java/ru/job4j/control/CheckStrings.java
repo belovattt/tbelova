@@ -60,5 +60,4 @@ public class CheckStrings {
        }
        return result;
    }
-
 }
