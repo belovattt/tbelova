@@ -1,5 +1,7 @@
 package ru.job4j.threads;
 
+import java.util.Scanner;
+
 public class CountText {
 
     /**
@@ -30,6 +32,11 @@ public class CountText {
                 if (((text.charAt(i) == ' ') && (text.charAt(i + 1) != '-')) || (text.charAt(i) == '\n')) {
                     count++;
                 }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                }
+
             }
             count++;
             System.out.println("words:" + count);
@@ -47,6 +54,7 @@ public class CountText {
 
         /**
          * конструктор.
+         *
          * @param text - текст
          */
         CountSpaces(String text) {
@@ -70,14 +78,27 @@ public class CountText {
                 if (text.charAt(i) == ' ') {
                     count++;
                 }
+                try{
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                }
             }
             System.out.println("spaces:" + count);
         }
     }
 
-     public static void main(String[] args) {
+    public static void main(String[] args) {
+        System.out.println("Программа выполняется...");
         String text = "qwer ytre, trr - fhgd\nuyegf iuy!";
-        new Thread(new CountWords(text)).start();
-        new Thread(new CountSpaces(text)).start();
+        Thread countWordsThread = new Thread(new CountWords(text));
+        countWordsThread.start();
+        Thread countSpacesThread = new Thread(new CountSpaces(text));
+        countSpacesThread.start();
+        try {
+            countSpacesThread.join();
+            countWordsThread.join();
+        } catch (InterruptedException e) {
+        }
+        System.out.println("Вот и все!");
     }
 }
