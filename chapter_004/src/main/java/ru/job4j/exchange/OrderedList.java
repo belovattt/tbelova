@@ -19,6 +19,7 @@ public class OrderedList implements Iterable<Order> {
      * указатель на первый элемент.
      */
     private Order head = null;
+
     /**
      * указатель на последний элемент.
      */

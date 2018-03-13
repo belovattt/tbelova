@@ -6,6 +6,7 @@ package ru.job4j.exchange;
  * buyBook - покупка
  */
 public class OrderBook {
+
     /**
      * возвращает sellBook.
      *

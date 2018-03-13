@@ -5,6 +5,7 @@ package ru.job4j.exchange;
  * Для хранения одной заявки
  */
 public class Order implements Comparable{
+
     /**
      * конструктор.
      * @param id - id

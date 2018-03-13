@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 
 public class OrderedListTest {
+
     @Test
     /**
      * метод должен добавлять элементы в список в порядке убывания цены.

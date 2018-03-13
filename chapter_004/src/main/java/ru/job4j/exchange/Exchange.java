@@ -11,6 +11,6 @@ public class Exchange {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите имя файла");
         String fileName = scanner.nextLine();
-        ConsoleOutput.printInConsole(FileInput.downloadBooks(fileName));
+        new SetOfBooks(fileName).printInConsole();
     }
 }

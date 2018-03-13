@@ -11,6 +11,7 @@ public class OrderedListIterator implements Iterator<Order> {
      * список.
      */
     private OrderedList orderedList;
+
     /**
      * указатель на текущий элемент.
      */
