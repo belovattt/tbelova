@@ -1,11 +1,22 @@
 package ru.job4j.exchange;
 
+import java.util.Collections;
+import java.util.TreeMap;
+
 /**
  * OrderBook - одна книга с двумя списками.
  * sellBook - продажа
  * buyBook - покупка
  */
 public class OrderBook {
+    /**
+     * buyBook
+     */
+    private OrderedList buyBook = new OrderedList(Collections.reverseOrder());
+    /**
+     * sellBook.
+     */
+    private OrderedList sellBook = new OrderedList();
 
     /**
      * возвращает sellBook.
@@ -26,11 +37,6 @@ public class OrderBook {
     }
 
     /**
-     * sellBook.
-     */
-    private OrderedList sellBook = new OrderedList();
-
-    /**
      * метод возвращает buyBook.
      *
      * @return buyBook
@@ -48,10 +54,6 @@ public class OrderBook {
         this.buyBook = buyBook;
     }
 
-    /**
-     * buyBook
-     */
-    private OrderedList buyBook = new OrderedList();
 
     /**
      * метод возвращает содержимое книги в виде строки.
@@ -69,9 +71,9 @@ public class OrderBook {
     public StringBuffer stringOutput() {
         StringBuffer result = new StringBuffer();
         result.append("Продажа:\n");
-        result.append(this.sellBook.stringOutput());
+        result.append(this.sellBook.toString());
         result.append("Покупка:\n");
-        result.append(this.buyBook.stringOutput());
+        result.append(this.buyBook.toString() );
         return result;
     }
 }

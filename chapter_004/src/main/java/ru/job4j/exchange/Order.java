@@ -4,24 +4,36 @@ package ru.job4j.exchange;
  * Класс Order.
  * Для хранения одной заявки
  */
-public class Order implements Comparable{
+public class Order implements Comparable {
+    /**
+     * цена.
+     */
+    private Double price;
+    /**
+     * id
+     */
+    private int id;
+    /**
+     * количество акций.
+     */
+    private int volume;
 
     /**
      * конструктор.
-     * @param id - id
-     * @param price - цена
+     *
+     * @param id     - id
+     * @param price  - цена
      * @param volume - количество
      */
     public Order(int id, double price, int volume) {
         this.price = price;
         this.volume = volume;
         this.id = id;
-        this.next = null;
-        this.prev = null;
     }
 
     /**
      * метод возвращает id.
+     *
      * @return id
      */
     public int getId() {
@@ -30,6 +42,7 @@ public class Order implements Comparable{
 
     /**
      * метод записывает id.
+     *
      * @param id - id
      */
 
@@ -37,13 +50,10 @@ public class Order implements Comparable{
         this.id = id;
     }
 
-    /**
-     * id
-     */
-    private int id;
 
     /**
      * метод возвращает цену.
+     *
      * @return цена
      */
     public Double getPrice() {
@@ -52,19 +62,17 @@ public class Order implements Comparable{
 
     /**
      * метод записывает цену.
+     *
      * @param price - цена
      */
     public void setPrice(Double price) {
         this.price = price;
     }
 
-    /**
-     * цена.
-     */
-    private Double price;
 
     /**
      * метод возвращает количество акций.
+     *
      * @return количество
      */
     public int getVolume() {
@@ -73,16 +81,13 @@ public class Order implements Comparable{
 
     /**
      * метод записывает количество акций.
+     *
      * @param volume - количество
      */
     public void setVolume(int volume) {
         this.volume = volume;
     }
 
-    /**
-     * количество акций.
-     */
-    private int volume;
 
     /**
      * Compares this object with the specified object for order.  Returns a
@@ -136,54 +141,34 @@ public class Order implements Comparable{
         return result;
     }
 
-    /**
-     * метод возвращает указатель на следующий элемент.
-     * @return следующий элемент
-     */
-    public Order getNext() {
-        return next;
-    }
-
-    /**
-     * метод записывает указатель на следующий элемент.
-     * @param next - следующий элемент
-     */
-    public void setNext(Order next) {
-        this.next = next;
-    }
-
-    /**
-     * указатель на следующий элемент.
-     */
-    private Order next;
-
-    /**
-     * метод возвращает указатель на предыдущий элемент.
-     * @return указатель
-     */
-    public Order getPrev() {
-        return prev;
-    }
-
-    /**
-     * метод записывает указатель на предыдущий элемент.
-     * @param prev - предыдущий элемент
-     */
-    public void setPrev(Order prev) {
-        this.prev = prev;
-    }
-
-    /**
-     * указатель на предыдущий элемент.
-     */
-    private Order prev;
 
     /**
      * метод возвращает содержимое заявки в виде строки.
+     *
      * @return цена количество id
      */
     @Override
     public String toString() {
-        return " " + this.price  + " " + this.volume + " " + this.id;
+        return " " + this.price + " " + this.volume + " " + this.id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
+
+        Order order = (Order) o;
+
+        if (id != order.id) return false;
+        if (volume != order.volume) return false;
+        return price.equals(order.price);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = price.hashCode();
+        result = 31 * result + id;
+        result = 31 * result + volume;
+        return result;
     }
 }

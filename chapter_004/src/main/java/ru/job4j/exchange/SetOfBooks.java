@@ -15,10 +15,12 @@ public class SetOfBooks {
      * hashmap для книг заявок.
      */
     private HashMap<Integer, OrderBook> setOfBooks = new HashMap<>();
+
     /**
      * конструктор читает строки из файла и заполняет setOfBooks.
+     *
      * @param fileName - имя файла
-     *      */
+     */
     SetOfBooks(String fileName) {
         try {
             File file = new File(fileName);
@@ -46,20 +48,22 @@ public class SetOfBooks {
         }
 
     }
+
     /**
      * конструктор для тестов.
      */
-SetOfBooks() {
+    SetOfBooks() {
 
-}
-/**
- * конструктор для тестов.
- */
-SetOfBooks(String[] orderArray) {
-    for (int i = 0; i < orderArray.length; i++) {
+    }
+
+    /**
+     * конструктор для тестов.
+     */
+    SetOfBooks(String[] orderArray) {
+        for (int i = 0; i < orderArray.length; i++) {
             String orderInString = orderArray[i];
             if (orderInString.contains("book")) {
-                if (orderInString. contains("A")) {
+                if (orderInString.contains("A")) {
                     int bookNumber = numberOfBook(orderInString);
                     String orderType = typeOfOrder(orderInString);
                     Order order = orderFromString(orderInString);
@@ -74,12 +78,14 @@ SetOfBooks(String[] orderArray) {
         }
 
 
-}
+    }
+
     /**
      * метод добавляет заявку.
+     *
      * @param bookNumber - номер книги
-     * @param orderType - покупка или продажа
-     * @param order - заявка
+     * @param orderType  - покупка или продажа
+     * @param order      - заявка
      */
     public void add(Integer bookNumber, String orderType, Order order) {
         if (!setOfBooks.containsKey(bookNumber)) {
@@ -89,14 +95,30 @@ SetOfBooks(String[] orderArray) {
         OrderBook orderBook = setOfBooks.get(bookNumber);
 
         if (orderType.equals("sell")) {
-            orderBook.getBuyBook().checkSellOrder(order);
+            order = orderBook.getBuyBook().checkSellOrder(order);
             if (order.getVolume() != 0) {
-                orderBook.getSellBook().add(order);
+                if (orderBook.getSellBook().containsKey(order.getPrice())) {
+                    SamePrice samePrice = orderBook.getSellBook().get(order.getPrice());
+                    samePrice.put(order.getId(), order);
+                    orderBook.getSellBook().put(order.getPrice(), samePrice);
+                } else {
+                    SamePrice samePrice = new SamePrice();
+                    samePrice.put(order.getId(), order);
+                    orderBook.getSellBook().put(order.getPrice(), samePrice);
+                }
             }
         } else {
-            orderBook.getSellBook().checkBuyOrder(order);
+            order = orderBook.getSellBook().checkBuyOrder(order);
             if (order.getVolume() != 0) {
-                orderBook.getBuyBook().add(order);
+               if (orderBook.getBuyBook().containsKey(order.getPrice())) {
+                   SamePrice samePrice = orderBook.getBuyBook().get(order.getPrice());
+                   samePrice.put(order.getId(), order);
+                   orderBook.getBuyBook().put(order.getPrice(), samePrice);
+               } else {
+                   SamePrice samePrice = new SamePrice();
+                   samePrice.put(order.getId(), order);
+                   orderBook.getBuyBook().put(order.getPrice(), samePrice);
+               }
             }
         }
         setOfBooks.put(bookNumber, orderBook);
@@ -105,8 +127,9 @@ SetOfBooks(String[] orderArray) {
 
     /**
      * метод удаляет заявку из указанной книги по указанному id
+     *
      * @param booknumber - номер книги
-     * @param orderId - id
+     * @param orderId    - id
      * @return true, если заявка удалена
      */
     public boolean delete(Integer booknumber, int orderId) {
@@ -125,16 +148,18 @@ SetOfBooks(String[] orderArray) {
 
     /**
      * метод возвращает содержимле всех книг с заявками в виде строки.
+     *
      * @return номер_книги sell...buy...
      */
     @Override
     public String toString() {
         String s = "";
         for (Integer key : setOfBooks.keySet()) {
-         s = s + key + setOfBooks.get(key).toString() + " ";
+            s = s + key + setOfBooks.get(key).toString() + " ";
         }
         return s;
     }
+
     /**
      * метод выводит в консоль содержимое setOfBooks.
      */
@@ -146,7 +171,6 @@ SetOfBooks(String[] orderArray) {
     /**
      * метод возвращает содержимое setOfBooks в виде строки.
      * заявки с одинаковой ценой объединяются
-     *
      *
      * @return
      */
@@ -162,15 +186,17 @@ SetOfBooks(String[] orderArray) {
 
     /**
      * метод возвращает номер книги.
+     *
      * @param s - строка
      * @return номер книги
      */
-    private static int numberOfBook (String s) {
+    private static int numberOfBook(String s) {
         return Integer.parseInt(s.substring(s.indexOf("-") + 1, s.indexOf(("\""), s.indexOf("-"))));
     }
 
     /**
      * метод возвращает тип заявки (продажа или покупка).
+     *
      * @param s - строка
      * @return buy или sell
      */
@@ -184,6 +210,7 @@ SetOfBooks(String[] orderArray) {
 
     /**
      * метод возвращает заявку.
+     *
      * @param s строка
      * @return order
      */
@@ -196,6 +223,7 @@ SetOfBooks(String[] orderArray) {
 
     /**
      * метод возвращает id заявки.
+     *
      * @param s - строка
      * @return id
      */
