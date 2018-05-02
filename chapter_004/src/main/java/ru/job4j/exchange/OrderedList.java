@@ -1,18 +1,18 @@
 package ru.job4j.exchange;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.TreeMap;
 
 /**
  * класс для создания упорядоченного по убыванию цены списка заявок.
  */
-public class OrderedList extends TreeMap<Double, SamePrice> {
+public class OrderedList {
+    private TreeMap<Double, SamePrice> orderedList;
     /**
      * конструктор.
      */
     OrderedList() {
-        super();
+        this.orderedList = new TreeMap<>();
     }
 
     /**
@@ -21,57 +21,57 @@ public class OrderedList extends TreeMap<Double, SamePrice> {
      * @param comparator - порядок сортировки
      */
     OrderedList(Comparator comparator) {
-        super(comparator);
+        this.orderedList = new TreeMap<>(comparator);
     }
 
     /**
      * метод проверяет, есть ли в книге ордеры, подходящие для продажи.
-     * Если есть, они совсем удаляются из книги или их количество уменьшается (в зависимости от количества акций в order.
+     * Если есть, они совсем удаляются из книги или их количество уменьшается (в зависимости от количества акций в orderok.
      *
-     * @param order - order
-     * @return order с измененным volume или null, если запрос полностью реализован
+     * @param orderok - orderok
+     * @return orderok с измененным volume или null, если запрос полностью реализован
      */
 
-    public Order checkBuyOrder(Order order) {
+    public Orderok checkBuyOrder(Orderok orderok) {
 
 
-            if (!this.isEmpty()) {
-                while ((order.getVolume() != 0) && (! this.isEmpty()) && (this.firstKey() <= order.getPrice())) {
-                    Double key = this.firstKey();
-                    SamePrice samePrice = this.get(key);
-                    this.remove(key);
-                    order = samePrice.checkOrder(order);
+            if (!this.orderedList.isEmpty()) {
+                while ((orderok.getVolume() != 0) && (! this.orderedList.isEmpty()) && ((double) this.orderedList.firstKey() <= orderok.getPrice())) {
+                    Double key = this.orderedList.firstKey();
+                    SamePrice samePrice = this.orderedList.get(key);
+                    this.orderedList.remove(key);
+                    orderok = samePrice.checkOrder(orderok);
                     if (! samePrice.isEmpty()) {
-                        this.put(key, samePrice);
+                        this.orderedList.put(key, samePrice);
                     }
                 }
             }
 
-        return order;
+        return orderok;
     }
 
 
     /**
      * метод проверяет, есть ли в книге ордеры, подходящие для покупки.
-     * Если есть, они совсем удаляются из книги или их количество уменьшается (в зависимости от количества акций в order.
+     * Если есть, они совсем удаляются из книги или их количество уменьшается (в зависимости от количества акций в orderok.
      *
-     * @param order - order
-     * @return order с измененным volume
+     * @param orderok - orderok
+     * @return orderok с измененным volume
      */
 
-    public Order checkSellOrder(Order order) {
-        if (!this.isEmpty()) {
-            while ((order.getVolume() != 0) && (! this.isEmpty()) && (this.firstKey() >= order.getPrice())) {
-                Double key = this.firstKey();
-                SamePrice samePrice = this.get(key);
-                this.remove(key);
-                order = samePrice.checkOrder(order);
+    public Orderok checkSellOrder(Orderok orderok) {
+        if (!this.orderedList.isEmpty()) {
+            while ((orderok.getVolume() != 0) && (! this.orderedList.isEmpty()) && ((double)this.orderedList.firstKey() >= (double)orderok.getPrice())) {
+                Double key = this.orderedList.firstKey();
+                SamePrice samePrice = this.orderedList.get(key);
+                this.orderedList.remove(key);
+                orderok = samePrice.checkOrder(orderok);
                 if (! samePrice.isEmpty()) {
-                    this.put(key, samePrice);
+                    this.orderedList.put(key, samePrice);
                 }
             }
         }
-        return order;
+        return orderok;
     }
 
     /**
@@ -82,9 +82,9 @@ public class OrderedList extends TreeMap<Double, SamePrice> {
     @Override
     public String toString() {
         StringBuffer result = new StringBuffer();
-        for (Double key : this.keySet()) {
+        for (Double key : this.orderedList.keySet()) {
             result.append(key.toString() + " ");
-            result.append(this.get(key).itogo() + "\n");
+            result.append(this.orderedList.get(key).itogo() + "\n");
         }
         return result.toString();
     }
@@ -98,12 +98,12 @@ public class OrderedList extends TreeMap<Double, SamePrice> {
      */
     public boolean deleteOrderOnId(int id) {
         boolean result = false;
-        if (!this.isEmpty()) {
-            for (Double key : this.keySet()) {
-                if (this.get(key).remove(id) != null) {
+        if (!this.orderedList.isEmpty()) {
+            for (Double key : this.orderedList.keySet()) {
+                if (this.orderedList.get(key).remove(id) != null) {
                     result = true;
-                    if (this.get(key).isEmpty()) {
-                        this.remove(key);
+                    if (this.orderedList.get(key).isEmpty()) {
+                        this.orderedList.remove(key);
                     }
                     break;
                 }
@@ -118,11 +118,20 @@ public class OrderedList extends TreeMap<Double, SamePrice> {
      */
     public StringBuffer stringOutput() {
         StringBuffer result = new StringBuffer();
-        for (Double price : this.keySet()) {
-            result.append(price.toString() + " " + this.get(price).itogo() + "\n");
+        for (Double price : this.orderedList.keySet()) {
+            result.append(price.toString() + " " + this.orderedList.get(price).itogo() + "\n");
 
         }
         return result;
+    }
+    public boolean containsKey(Double d) {
+        return this.orderedList.containsKey(d);
+    }
+    public SamePrice get (Double d) {
+        return this.orderedList.get(d);
+    }
+    public void put (Double d, SamePrice samePrice) {
+        this.orderedList.put(d, samePrice);
     }
 }
 

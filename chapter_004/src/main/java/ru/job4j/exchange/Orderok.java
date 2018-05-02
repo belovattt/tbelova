@@ -1,10 +1,10 @@
 package ru.job4j.exchange;
 
 /**
- * Класс Order.
+ * Класс Orderok.
  * Для хранения одной заявки
  */
-public class Order implements Comparable {
+public class Orderok implements Comparable {
     /**
      * цена.
      */
@@ -25,7 +25,7 @@ public class Order implements Comparable {
      * @param price  - цена
      * @param volume - количество
      */
-    public Order(int id, double price, int volume) {
+    public Orderok(int id, double price, int volume) {
         this.price = price;
         this.volume = volume;
         this.id = id;
@@ -130,7 +130,7 @@ public class Order implements Comparable {
     @Override
     public int compareTo(Object o) {
         int result = -1;
-        Order ord = (Order) o;
+        Orderok ord = (Orderok) o;
         if (this.price > ord.getPrice()) {
             result = 1;
         } else {
@@ -155,13 +155,13 @@ public class Order implements Comparable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Order)) return false;
+        if (!(o instanceof Orderok)) return false;
 
-        Order order = (Order) o;
+        Orderok orderok = (Orderok) o;
 
-        if (id != order.id) return false;
-        if (volume != order.volume) return false;
-        return price.equals(order.price);
+        if (id != orderok.id) return false;
+        if (volume != orderok.volume) return false;
+        return price.equals(orderok.price);
     }
 
     @Override

@@ -33,8 +33,8 @@ public class SetOfBooks {
                     if (orderInString.contains("A")) {
                         int bookNumber = numberOfBook(orderInString);
                         String orderType = typeOfOrder(orderInString);
-                        Order order = orderFromString(orderInString);
-                        this.add(bookNumber, orderType, order);
+                        Orderok orderok = orderFromString(orderInString);
+                        this.add(bookNumber, orderType, orderok);
                     } else {
                         int bookNumber = numberOfBook(orderInString);
                         int orderId = idOfOrder(orderInString);
@@ -66,8 +66,8 @@ public class SetOfBooks {
                 if (orderInString.contains("A")) {
                     int bookNumber = numberOfBook(orderInString);
                     String orderType = typeOfOrder(orderInString);
-                    Order order = orderFromString(orderInString);
-                    this.add(bookNumber, orderType, order);
+                    Orderok orderok = orderFromString(orderInString);
+                    this.add(bookNumber, orderType, orderok);
                 } else {
                     int bookNumber = numberOfBook(orderInString);
                     int orderId = idOfOrder(orderInString);
@@ -85,9 +85,9 @@ public class SetOfBooks {
      *
      * @param bookNumber - номер книги
      * @param orderType  - покупка или продажа
-     * @param order      - заявка
+     * @param orderok      - заявка
      */
-    public void add(Integer bookNumber, String orderType, Order order) {
+    public void add(Integer bookNumber, String orderType, Orderok orderok) {
         if (!setOfBooks.containsKey(bookNumber)) {
             OrderBook orderBook = new OrderBook();
             this.setOfBooks.put(bookNumber, orderBook);
@@ -95,29 +95,29 @@ public class SetOfBooks {
         OrderBook orderBook = setOfBooks.get(bookNumber);
 
         if (orderType.equals("sell")) {
-            order = orderBook.getBuyBook().checkSellOrder(order);
-            if (order.getVolume() != 0) {
-                if (orderBook.getSellBook().containsKey(order.getPrice())) {
-                    SamePrice samePrice = orderBook.getSellBook().get(order.getPrice());
-                    samePrice.put(order.getId(), order);
-                    orderBook.getSellBook().put(order.getPrice(), samePrice);
+            orderok = orderBook.getBuyBook().checkSellOrder(orderok);
+            if (orderok.getVolume() != 0) {
+                if (orderBook.getSellBook().containsKey(orderok.getPrice())) {
+                    SamePrice samePrice = orderBook.getSellBook().get(orderok.getPrice());
+                    samePrice.put(orderok.getId(), orderok);
+                    orderBook.getSellBook().put(orderok.getPrice(), samePrice);
                 } else {
                     SamePrice samePrice = new SamePrice();
-                    samePrice.put(order.getId(), order);
-                    orderBook.getSellBook().put(order.getPrice(), samePrice);
+                    samePrice.put(orderok.getId(), orderok);
+                    orderBook.getSellBook().put(orderok.getPrice(), samePrice);
                 }
             }
         } else {
-            order = orderBook.getSellBook().checkBuyOrder(order);
-            if (order.getVolume() != 0) {
-               if (orderBook.getBuyBook().containsKey(order.getPrice())) {
-                   SamePrice samePrice = orderBook.getBuyBook().get(order.getPrice());
-                   samePrice.put(order.getId(), order);
-                   orderBook.getBuyBook().put(order.getPrice(), samePrice);
+            orderok = orderBook.getSellBook().checkBuyOrder(orderok);
+            if (orderok.getVolume() != 0) {
+               if (orderBook.getBuyBook().containsKey(orderok.getPrice())) {
+                   SamePrice samePrice = orderBook.getBuyBook().get(orderok.getPrice());
+                   samePrice.put(orderok.getId(), orderok);
+                   orderBook.getBuyBook().put(orderok.getPrice(), samePrice);
                } else {
                    SamePrice samePrice = new SamePrice();
-                   samePrice.put(order.getId(), order);
-                   orderBook.getBuyBook().put(order.getPrice(), samePrice);
+                   samePrice.put(orderok.getId(), orderok);
+                   orderBook.getBuyBook().put(orderok.getPrice(), samePrice);
                }
             }
         }
@@ -214,11 +214,11 @@ public class SetOfBooks {
      * @param s строка
      * @return order
      */
-    private static Order orderFromString(String s) {
+    private static Orderok orderFromString(String s) {
         double price = Double.parseDouble(s.substring(s.indexOf("price") + 7, s.indexOf(("\""), s.indexOf("price") + 7)));
         int volume = Integer.parseInt(s.substring(s.indexOf("volume") + 8, s.indexOf(("\""), s.indexOf("volume") + 8)));
         int id = Integer.parseInt(s.substring(s.indexOf("orderId") + 9, s.indexOf(("\""), s.indexOf("orderId") + 9)));
-        return new Order(id, price, volume);
+        return new Orderok(id, price, volume);
     }
 
     /**

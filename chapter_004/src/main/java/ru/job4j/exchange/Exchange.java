@@ -7,12 +7,11 @@ import java.util.Scanner;
  */
 public class Exchange {
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите имя файла");
         String fileName = scanner.nextLine();
         long nowTime = System.currentTimeMillis();
         new SetOfBooks(fileName).printInConsole();
-        System.out.println(System.currentTimeMillis() - nowTime);
     }
 }
