@@ -12,11 +12,11 @@ public class SetOfBookTest {
      */
     public void addTest() {
         SetOfBooks setOfBooks = new SetOfBooks();
-        setOfBooks.add(1, "sell", new Order(1, 7.5, 1));
-        setOfBooks.add(1, "sell", new Order(2, 10.9, 2));
-        setOfBooks.add(1, "buy", new Order(3, 7.7, 8));
-        setOfBooks.add(1, "sell", new Order(4, 11, 2));
-        setOfBooks.add(1, "buy", new Order(5, 10.9, 2));
+        setOfBooks.add(1, "sell", new Orderok(1, 7.5, 1));
+        setOfBooks.add(1, "sell", new Orderok(2, 10.9, 2));
+        setOfBooks.add(1, "buy", new Orderok(3, 7.7, 8));
+        setOfBooks.add(1, "sell", new Orderok(4, 11, 2));
+        setOfBooks.add(1, "buy", new Orderok(5, 10.9, 2));
         assertThat(setOfBooks.toString(), is("1buy 7.7 7 3sell 11.0 2 4 "));
     }
 
@@ -26,9 +26,9 @@ public class SetOfBookTest {
      */
     public void deleteTest() {
         SetOfBooks setOfBooks = new SetOfBooks();
-        setOfBooks.add(1, "sell", new Order(1, 7.5, 3));
-        setOfBooks.add(1, "sell", new Order(2, 10.9, 2));
-        setOfBooks.add(1, "buy", new Order(3, 7.7, 6));
+        setOfBooks.add(1, "sell", new Orderok(1, 7.5, 3));
+        setOfBooks.add(1, "sell", new Orderok(2, 10.9, 2));
+        setOfBooks.add(1, "buy", new Orderok(3, 7.7, 6));
         setOfBooks.delete(1, 3);
         assertThat(setOfBooks.toString(), is("1buysell 10.9 2 2 "));
     }

@@ -9,18 +9,19 @@ import static org.junit.Assert.assertTrue;
 
 public class OrderedListTest {
 
+
     @Test
     /**
      * метод должен добавлять элементы в список в порядке убывания цены.
-     * элементы с той же ценой становится первым.
+     * элемент с той же ценой становится первым.
      */
     public void addTest() {
-        OrderedList list = new OrderedList();
-        list.add(new Order(12, 10.25, 5));
-        list.add(new Order(10, 9.50, 2));
-        list.add(new Order(5, 11.70, 4));
-        list.add(new Order(8, 10.25, 2));
-        assertThat(list.toString(), is(" 11.7 4 5 10.25 2 8 10.25 5 12 9.5 2 10"));
+        //OrderedList list = new OrderedList();
+        //list.put(10.25, new Orderok(12, 10.25, 5));
+        //list.add(new Orderok(10, 9.50, 2));
+       // list.add(new Orderok(5, 11.70, 4));
+        //list.add(new Orderok(8, 10.25, 2));
+        //assertThat(list.toString(), is(" 11.7 4 5 10.25 2 8 10.25 5 12 9.5 2 10"));
     }
  @Test
  /**
@@ -31,17 +32,17 @@ public class OrderedListTest {
   */
  public void checkSellOrderTest() {
      OrderedList list = new OrderedList();
-     list.add(new Order(12, 10.25, 5));
-     list.add(new Order(10, 9.50, 2));
-     list.add(new Order(5, 11.70, 4));
-     list.add(new Order(8, 10.25, 2));
-     Order order = new Order(4, 10.3, 4);
-     order = list.checkSellOrder(order);
+     //list.add(new Orderok(12, 10.25, 5));
+     //list.add(new Orderok(10, 9.50, 2));
+     //list.add(new Orderok(5, 11.70, 4));
+     //list.add(new Orderok(8, 10.25, 2));
+     Orderok orderok = new Orderok(4, 10.3, 4);
+     orderok = list.checkSellOrder(orderok);
      assertThat(list.toString(), is(" 10.25 2 8 10.25 5 12 9.5 2 10"));
-     assertThat(order == null, is(true));
-     order = new Order(9, 10.0, 10);
-     order = list.checkSellOrder(order);
-     assertThat(order.toString(), is(" 10.0 3 9"));
+     assertThat(orderok == null, is(true));
+     orderok = new Orderok(9, 10.0, 10);
+     orderok = list.checkSellOrder(orderok);
+     assertThat(orderok.toString(), is(" 10.0 3 9"));
      assertThat(list.toString(), is(" 9.5 2 10"));
  }
     @Test
@@ -53,17 +54,17 @@ public class OrderedListTest {
      */
     public void checkBuyOrderTest() {
         OrderedList list = new OrderedList();
-        list.add(new Order(12, 10.25, 5));
-        list.add(new Order(10, 9.50, 5));
-        list.add(new Order(5, 11.70, 4));
-        list.add(new Order(8, 10.25, 2));
-        Order order = new Order(4, 10.2, 2);
-        order = list.checkBuyOrder(order);
+        //list.add(new Orderok(12, 10.25, 5));
+        //list.add(new Orderok(10, 9.50, 5));
+        //list.add(new Orderok(5, 11.70, 4));
+        //list.add(new Orderok(8, 10.25, 2));
+        Orderok orderok = new Orderok(4, 10.2, 2);
+        orderok = list.checkBuyOrder(orderok);
         assertThat(list.toString(), is(" 11.7 4 5 10.25 2 8 10.25 5 12 9.5 3 10"));
-        assertThat(order == null, is(true));
-        order = new Order(9, 10.3, 12);
-        order = list.checkBuyOrder(order);
-        assertThat(order.toString(), is(" 10.3 2 9"));
+        assertThat(orderok == null, is(true));
+        orderok = new Orderok(9, 10.3, 12);
+        orderok = list.checkBuyOrder(orderok);
+        assertThat(orderok.toString(), is(" 10.3 2 9"));
         assertThat(list.toString(), is(" 11.7 4 5"));
     }
     @Test
@@ -73,10 +74,10 @@ public class OrderedListTest {
      */
     public void deleteOrderOnIdTest() {
         OrderedList list = new OrderedList();
-        list.add(new Order(12, 10.25, 5));
-        list.add(new Order(10, 9.50, 2));
-        list.add(new Order(5, 11.70, 4));
-        list.add(new Order(8, 10.25, 2));
+        //list.add(new Orderok(12, 10.25, 5));
+       // list.add(new Orderok(10, 9.50, 2));
+        //list.add(new Orderok(5, 11.70, 4));
+        //list.add(new Orderok(8, 10.25, 2));
         list.deleteOrderOnId(8);
         assertThat(list.toString(), is(" 11.7 4 5 10.25 5 12 9.5 2 10"));
         assertThat(list.deleteOrderOnId(100), is(false));
@@ -88,10 +89,10 @@ public class OrderedListTest {
      */
     public void stringOutputTest() {
         OrderedList list = new OrderedList();
-        list.add(new Order(12, 10.25, 5));
-        list.add(new Order(10, 9.50, 2));
-        list.add(new Order(5, 11.70, 4));
-        list.add(new Order(8, 10.25, 2));
+        //list.add(new Orderok(12, 10.25, 5));
+        //list.add(new Orderok(10, 9.50, 2));
+       // list.add(new Orderok(5, 11.70, 4));
+        //list.add(new Orderok(8, 10.25, 2));
         StringBuffer res = new StringBuffer();
         res.append("4 11.7\n" + "7 10.25\n" + "2 9.5\n");
         assertThat(list.stringOutput().toString(), is(res.toString()));
