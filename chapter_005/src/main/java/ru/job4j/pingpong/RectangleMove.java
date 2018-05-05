@@ -1,5 +1,7 @@
 package ru.job4j.pingpong;
+
 import javafx.scene.shape.Rectangle;
+
 public class RectangleMove implements Runnable {
     private final Rectangle rect;
 
@@ -11,19 +13,24 @@ public class RectangleMove implements Runnable {
     public void run() {
         int dx = 1;
         int dy = 1;
-        while (true) {
+        boolean flag = true;
+        while (flag) {
+            if (Thread.interrupted()) {
+                flag = false;
+            }
             if ((this.rect.getX() == 300) || (this.rect.getX() == 0)) {
-                dx = - dx;
+                dx = -dx;
             }
             if ((this.rect.getY() == 300) || (this.rect.getY() == 0)) {
-                dy = - dy;
+                dy = -dy;
             }
             this.rect.setX(this.rect.getX() + dx);
             this.rect.setY(this.rect.getY() + dy);
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                flag = false;
             }
         }
     }

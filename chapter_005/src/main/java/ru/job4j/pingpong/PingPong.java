@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class PingPong extends Application {
     private static final String JOB4J = "Пинг-понг www.job4j.ru";
@@ -16,11 +17,18 @@ public class PingPong extends Application {
         Group group = new Group();
         Rectangle rect = new Rectangle(50, 100, 10, 10);
         group.getChildren().add(rect);
-        new Thread(new RectangleMove(rect)).start();
+        Thread pingPongThread = new Thread(new RectangleMove(rect));
+        pingPongThread.start();
         stage.setScene(new Scene(group, limitX, limitY));
         stage.setTitle(JOB4J);
         stage.setResizable(false);
         stage.show();
+        stage.setOnCloseRequest(
+                (WindowEvent event) -> {
+                    pingPongThread.interrupt();
+                }
+);
     }
+
 
 }
