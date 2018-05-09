@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 
 /**
  * класс реализует итератор для динамического списка на базе указателей.
+ *
  * @param <E> - тип данных
  */
 public class DinListIterator<E> implements Iterator<E> {
@@ -15,7 +16,6 @@ public class DinListIterator<E> implements Iterator<E> {
     /**
      * указатель на следующий элемент
      * помнит предыдущий элемент
-     *
      */
     private ListElement<E> position = new ListElement<E>(null);
 
@@ -25,7 +25,7 @@ public class DinListIterator<E> implements Iterator<E> {
      * @param dinList - объект для итератора
      */
 
-    public DinListIterator(DinList<E> dinList) {
+    DinListIterator(DinList<E> dinList) {
         this.dinList = dinList;
         this.position.setNext(this.dinList.getHead());
         this.position.setPrev(null);
@@ -44,7 +44,7 @@ public class DinListIterator<E> implements Iterator<E> {
         // если перед этим next() возвратил последний элемент
         if (this.position.getNext() == null) {
 
-            if (this.position.getPrev() == this.dinList.getTail())  {
+            if (this.position.getPrev() == this.dinList.getTail()) {
                 // если не было добавления новых элементов
                 result = false;
             } else {
@@ -65,10 +65,10 @@ public class DinListIterator<E> implements Iterator<E> {
     @Override
     public E next() throws NoSuchElementException {
         E result;
-         if (this.hasNext()) {
-           result = position.getNext().getData();
+        if (this.hasNext()) {
+            result = position.getNext().getData();
             position.setPrev(position.getNext());
-           position.setNext(position.getNext().getNext());
+            position.setNext(position.getNext().getNext());
 
         } else {
             throw new NoSuchElementException();

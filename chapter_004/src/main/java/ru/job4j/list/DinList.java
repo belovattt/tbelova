@@ -1,5 +1,8 @@
 package ru.job4j.list;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -7,22 +10,18 @@ import java.util.NoSuchElementException;
  * класс реализует динамический двунаправленный список на базе указателей
  * @param <E> - тип данных
  */
+@ThreadSafe
 public class DinList<E> implements Iterable<E> {
-    public void setHead(ListElement<E> head) {
-        this.head = head;
-    }
-
-    public void setTail(ListElement<E> tail) {
-        this.tail = tail;
-    }
 
     /**
      * указатель на начало списка.
      */
+    @GuardedBy("this")
     private ListElement<E> head;
     /**
      * указатель на конец списка.
      */
+    @GuardedBy("this")
     private ListElement<E> tail;
 
     /**
@@ -33,12 +32,15 @@ public class DinList<E> implements Iterable<E> {
         this.head = null;
         this.tail = null;
     }
+    synchronized void setHead(ListElement<E> head) {
+        this.head = head;
+    }
 
-    /**
+     /**
      * метод возвращает ссылку на начало списка.
      * @return ссылка на начало списка
      */
-    public ListElement<E> getHead() {
+    public synchronized ListElement<E> getHead() {
         return head;
     }
 
@@ -46,7 +48,7 @@ public class DinList<E> implements Iterable<E> {
      * метод возвращает ссылку на последний элемент списка.
      * @return ссылка на последний элемент
      */
-    public ListElement<E> getTail() {
+    public synchronized ListElement<E> getTail() {
         return tail;
     }
 
@@ -54,8 +56,8 @@ public class DinList<E> implements Iterable<E> {
      * метод добавляет элемент в список и записывает в него данные
      * @param value - данные
      */
-    public void add(E value) {
-        ListElement<E> el = new ListElement(value);
+    public synchronized void add(E value) {
+        ListElement<E> el = new ListElement<E>(value);
         if (this.head != null) {
             el.setPrev(tail);
             tail.setNext(el);
@@ -72,7 +74,7 @@ public class DinList<E> implements Iterable<E> {
      * @return данные
      * @throws NoSuchElementException - если элемента с таким номером нет
      */
-    public E get(int index) throws NoSuchElementException {
+    public synchronized E get(int index) throws NoSuchElementException {
         ListElement<E> runner = this.head;
         int i = 0;
         if (index < 0) {

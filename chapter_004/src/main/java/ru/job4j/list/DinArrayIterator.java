@@ -1,5 +1,7 @@
 package ru.job4j.list;
 
+
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -7,11 +9,12 @@ import java.util.NoSuchElementException;
  * класс реализует итератор для класса DinArray
  * @param <E>
  */
+
 public class DinArrayIterator<E> implements Iterator {
     /**
      * ссылка на объект класса, для которого создается итератор
      */
-    private DinArray<E> dinArray;
+    private final DinArray<E> dinArray;
     /**
      * текущая позиция
      */
@@ -36,7 +39,7 @@ public class DinArrayIterator<E> implements Iterator {
      */
     @Override
     public boolean hasNext() {
-        return (position == dinArray.getArr().length) ? false : true;
+        return (position != dinArray.getArr().length);
     }
 
     /**
@@ -47,9 +50,9 @@ public class DinArrayIterator<E> implements Iterator {
      */
     @Override
     public E next() throws NoSuchElementException {
-        E result = null;
+        E result;
         if (this.hasNext()) {
-            result = (E) this.dinArray.get(position++);
+            result = this.dinArray.get(position++);
         } else {
             throw new NoSuchElementException();
         }
