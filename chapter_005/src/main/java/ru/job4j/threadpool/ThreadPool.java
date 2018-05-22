@@ -19,10 +19,10 @@ public class ThreadPool {
     private final LinkedBlockingQueue<Work> queue = new LinkedBlockingQueue();
 
     /**
-     * конструктор.
-     * запускаем потоки
+     * метод запускает все потоки пула.
      */
-    ThreadPool() {
+
+    public void startRun() {
         for (int i = 0; i < maxThreads; i++) {
             threads[i] = new PoolWork();
             threads[i].start();
@@ -31,6 +31,7 @@ public class ThreadPool {
 
     /**
      * метод для добавления задачи в пул.
+     *
      * @param work - задача
      */
     public void add(Work work) {
@@ -40,17 +41,26 @@ public class ThreadPool {
         }
     }
 
+    /**
+     * метод завершает работу пула.
+     */
+    public void stopRun() {
+        for (int i = 0; i < maxThreads; i++) {
+            threads[i].interrupt();
+        }
+    }
+
+    /**
+     * класс реализует один поток из пула.
+     */
     private class PoolWork extends Thread {
         public void run() {
-            /**
-             * переменная для извлечения задачи из очереди.
-             */
+            // переменная для извлечения задачи из очереди.
             Work work;
-            /**
-             * если в очереди нет задач, ждет.
-             * когда появится, извлекает ее из очереди и запускает
-             */
-            while (true) {
+            //если в очереди нет задач, ждет.
+            //когда появится, извлекает ее из очереди и запускает
+
+            while (!isInterrupted()) {
                 synchronized (queue) {
                     while (queue.isEmpty()) {
                         try {

@@ -12,11 +12,13 @@ public class Work implements Runnable {
 
     /**
      * конструктор
+     *
      * @param number - номер
      */
-    Work (int number) {
+    Work(int number) {
         this.number = number;
     }
+
     /**
      * When an object implementing interface <code>Runnable</code> is used
      * to create a thread, starting the thread causes the object's
@@ -30,6 +32,6 @@ public class Work implements Runnable {
      */
     @Override
     public void run() {
-System.out.printf("Поток номер %d начал работу\n", number);
+        System.out.printf("Поток номер %d начал работу\n", number);
     }
 }
