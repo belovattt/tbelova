@@ -20,15 +20,13 @@ public class SimpleLock {
     /**
      * метод включает блокировку.
      */
-    public void lock() {
-        try {
+    public synchronized void lock() throws InterruptedException {
+
             while ((isLocked) && (lockingThread != Thread.currentThread())) {
                 wait();
 
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         isLocked = true;
         countLock++;
         this.lockingThread = Thread.currentThread();
@@ -37,12 +35,11 @@ public class SimpleLock {
     /**
      * метод выключает блокировку.
      */
-    public void unlock() {
+    public synchronized void unlock() {
         if (this.lockingThread == Thread.currentThread()) {
             countLock--;
             if (countLock == 0) {
                 isLocked = false;
-                lockingThread = null;
                 notifyAll();
             }
         }
