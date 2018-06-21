@@ -26,7 +26,6 @@ public class AddTwo implements Runnable {
      *
      * @see Thread#run()
      */
-
     @Override
     public void run() {
         for (int i = 1; i < 31; i++) {

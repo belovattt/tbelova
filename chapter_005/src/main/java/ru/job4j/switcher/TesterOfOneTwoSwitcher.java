@@ -1,5 +1,4 @@
 package ru.job4j.switcher;
-
 /**
  * класс для тестирования.
  */
