@@ -1,4 +1,8 @@
 package ru.job4j.switcher;
+
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
 /**
  * поток в цикле добавляет в строку цифру 1.
  */
@@ -6,15 +10,22 @@ public class AddTwo implements Runnable {
     /**
      * строка.
      */
-    private StringOfNumbers str;
+    private StringBuffer str;
+    /**
+     * барьер.
+     */
+    private CyclicBarrier bar;
 
     /**
      * конструктор.
+     *
      * @param str - строка
      */
-    AddTwo(StringOfNumbers str) {
+    AddTwo(StringBuffer str, CyclicBarrier bar) {
         this.str = str;
+        this.bar = bar;
     }
+
     /**
      * When an object implementing interface <code>Runnable</code> is used
      * to create a thread, starting the thread causes the object's
@@ -28,12 +39,15 @@ public class AddTwo implements Runnable {
      */
     @Override
     public void run() {
-        for (int i = 1; i < 31; i++) {
-            try {
-                this.str.addNumber(2);
-            } catch (InterruptedException e) {
-
+        try {
+            for (int j = 1; j < 4; j++) {
+                this.str.append(2);
             }
+            this.bar.await();
+        } catch (InterruptedException e) {
+        } catch (BrokenBarrierException be) {
         }
+
     }
+
 }
