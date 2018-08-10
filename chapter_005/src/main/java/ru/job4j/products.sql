@@ -37,18 +37,17 @@ select p.product_name from product as p
 where extract(month from p.expired_date) - extract(month from current_date) = 1 
 and extract(year from p.expired_date) = extract(year from current_date);
 
-select p.product_name from product as p 
-where p.price = (select max(p.price) from product as p);
+select p.product_name from product as p
+order by p.price limit 1;
 
-select count(p.product_name) from product as p inner join typee as t on p.type_id = t.type_id
-where t.typ = 'cheese';
+select t.typ, count(p.product_name) from product as p inner join typee as t on p.type_id = t.type_id
+group by t.typ;
 
 select product_name from product as p inner join typee as t on p.type_id = t.type_id
 where (t.typ = 'cheese' or t.typ = 'milk');
 
-select t.typ from typee as t 
-where 
-	(select count(p.product_name) from product as p where p.type_id = t.type_id) < 10;
+select t.typ from typee as t inner join product as p on t.type_id = p.type_id
+group by t.typ having count(p.product_name) < 10;
 
 select p.product_name, t.typ from product as p inner join typee as t on p.type_id = t.type_id;
 
