@@ -3,25 +3,25 @@ create table carcass (
    carcass_type varchar(100)
 );
 insert into carcass (carcass_type) values 
-	('седан'),
-	('хэтчбек'),
-	('универсал'),
-	('купе');
+	('СЃРµРґР°РЅ'),
+	('С…СЌС‚С‡Р±РµРє'),
+	('СѓРЅРёРІРµСЂСЃР°Р»'),
+	('РєСѓРїРµ');
 create table motor (
    id serial primary key,
    motor_type varchar(100)
 );
-insert into motor (motor_type) values 
-	('дизель'),
-	('бензин');
+insert into motor (motor_type) values
+	('РґРёР·РµР»СЊ'),
+	('Р±РµРЅР·РёРЅ');
 create table transmission (
    id serial primary key,
    transmission_type varchar(100)
 );
-insert into transmission (transmission_type) values 
-	('механика'),
-	('автомат'),
-	('робот');
+insert into transmission (transmission_type) values
+	('РјРµС…Р°РЅРёРєР°'),
+	('Р°РІС‚РѕРјР°С‚'),
+	('СЂРѕР±РѕС‚');
 create table car (
    id serial primary key,
    car_type varchar(100),
