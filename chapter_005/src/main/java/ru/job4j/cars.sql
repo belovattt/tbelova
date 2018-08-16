@@ -22,6 +22,7 @@ insert into transmission (transmission_type) values
 	('механика'),
 	('автомат'),
 	('робот');
+
 create table car (
    id serial primary key,
    car_type varchar(100),
