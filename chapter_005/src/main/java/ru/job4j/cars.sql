@@ -30,6 +30,7 @@ create table car (
 	carcass_id int references carcass(id),
 	transmission_id int references transmission(id)
 );
+
 insert into car (car_type, motor_id, carcass_id, transmission_id) values 
 	('BMW', 1, 1, 1),
 	('Audi', 1, 2, 2),
