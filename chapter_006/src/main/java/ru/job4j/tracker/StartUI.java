@@ -39,7 +39,6 @@ public class StartUI {
         this.output = output;
         this.tracker = tracker;
     }
-
     /**
      * метод init.
      */

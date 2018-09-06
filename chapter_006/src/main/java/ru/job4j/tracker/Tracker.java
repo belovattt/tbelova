@@ -75,7 +75,6 @@ public class Tracker implements AutoCloseable {
             getAllQuery = scanner.nextLine();
             conn = DriverManager.getConnection(url, props);
             try (Statement st = conn.createStatement()) {
-
                 st.execute("CREATE TABLE IF NOT EXISTS Items(id serial primary key, userName varchar(100), description varchar(100), created DATE, comments text)");
             }
         }
