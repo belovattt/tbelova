@@ -62,8 +62,8 @@ public class StartUI {
     public static void main(String[] args) {
         Input input = new ValidateInput();
         Output output = new ConsoleOutput();
-        try {
-            Tracker tracker = new Tracker();
+        try (Tracker tracker = new Tracker()){
+
             new StartUI(input, output, tracker).init();
         } catch (FileNotFoundException | SQLException e) {
             e.printStackTrace();
