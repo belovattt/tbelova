@@ -2,7 +2,7 @@ package ru.job4j.tracker;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.Arrays;
+
 
 /**
  * Class StartUI.
@@ -34,7 +34,8 @@ public class StartUI {
      * @param output  - вывод данных
      * @param tracker - tracker
      */
-    public StartUI(Input input, Output output, Tracker tracker) {
+    public StartUI(final Input input, final Output output,
+                   final Tracker tracker) {
         this.input = input;
         this.output = output;
         this.tracker = tracker;
@@ -42,8 +43,7 @@ public class StartUI {
     /**
      * метод init.
      */
-    public void init() {
-        int choice;
+    public final void init() {
         MenuTracker menu = new MenuTracker(input, output, tracker);
         menu.fillActions();
         do {
@@ -58,11 +58,10 @@ public class StartUI {
      *
      * @param args - args
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         Input input = new ValidateInput();
         Output output = new ConsoleOutput();
-        try (Tracker tracker = new Tracker()){
-
+        try (Tracker tracker = new Tracker()) {
             new StartUI(input, output, tracker).init();
         } catch (FileNotFoundException | SQLException e) {
             e.printStackTrace();

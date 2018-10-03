@@ -1,12 +1,7 @@
 jdbc:postgresql://localhost:5432/Tracker
 postgres
 postgres
-insert into items (username, description, created, comments) values (?, ?, ?, ?);
-update items set username = ?, description = ?, comments = ? where items.id = ?;
-select * from items where items.id = ?;
-select * from items where items.username = ?;
-delete from items where items.id = ?;
-select * from items;
+
 
 
 

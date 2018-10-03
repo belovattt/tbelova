@@ -8,10 +8,14 @@ import java.util.Arrays;
  *@since 1.08.2017
 */
 public class StubOutput implements Output {
+    /**
+     * размер массива.
+     */
+    private final int maxVal = 100;
 	/**
 	*массив для вывода.
 	*/
-	private String[] lines = new String[100];
+	private String[] lines = new String[maxVal];
 	/**
 	*номер первого свободного элемента.
 	*/
@@ -20,22 +24,15 @@ public class StubOutput implements Output {
 	*метод добавляет строку line в массив lines.
 	*@param line - line
 	*/
-	public void write(String line) {
+	public final void write(final String line) {
 		lines[index++] = line;
 	}
 	/**
 	*метод возвращает заполненные элементы массива lines.
 	*@return lines
 	*/
-	public String[] getLines() {
+	public final String[] getLines() {
 		this.lines = Arrays.copyOf(this.lines, this.index);
 		return this.lines;
-	}
-	/**
-	*метод возвращает index.
-	*@return index
-	*/
-	public int getIndex() {
-		return this.index;
 	}
 }

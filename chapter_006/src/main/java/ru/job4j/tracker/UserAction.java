@@ -9,10 +9,12 @@ package ru.job4j.tracker;
 public interface UserAction {
     /**
      *выбор пункта меню.
+     * @param key - key
      */
     void setKey(int key);
     /**
      *номер текущего пункта меню.
+     * @return key
      */
     int getKey();
     /**
@@ -23,7 +25,8 @@ public interface UserAction {
      */
     void execute(Input input, Output output, Tracker tracker);
     /**
-     *вывод информации .
+     *вывод информации.
+     * @return information
      */
     String info();
 }

@@ -2,8 +2,6 @@ package ru.job4j.tracker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.*;
@@ -18,8 +16,13 @@ import java.util.Scanner;
  * @since 24.08.2018
  */
 public class Tracker implements AutoCloseable {
-
-    private static final Logger log = LoggerFactory.getLogger(SQLStorage.class);
+    /**
+     * logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(SQLStorage.class);
+    /**
+     * connection.
+     */
     private Connection conn = null;
     /**
      * путь к папке с исходниками.
@@ -52,30 +55,30 @@ public class Tracker implements AutoCloseable {
 
     /**
      * конструктор.
-     *
-     * @throws FileNotFoundException
-     * @throws SQLException
+     * @throws FileNotFoundException FileNotFoundException
+     * @throws SQLException SQLException
      */
     public Tracker() throws FileNotFoundException, SQLException {
         this.basePath = basePath;
         Properties props = new Properties();
         String url = "";
         ClassLoader classLoader = getClass().getClassLoader();
-        try (Scanner scanner = new Scanner(new File(classLoader.getResource("start.txt").getFile()))) {
+        try (Scanner scanner = new Scanner(new File(
+                classLoader.getResource("start.txt").getFile()))) {
             url = scanner.nextLine();
             String userName = scanner.nextLine();
             String pass = scanner.nextLine();
             props.setProperty("user", userName);
             props.setProperty("password", pass);
-            addQuery = scanner.nextLine();
-            updateQuery = scanner.nextLine();
-            findByIdQuery = scanner.nextLine();
-            findByNameQuery = scanner.nextLine();
-            deleteQuery = scanner.nextLine();
-            getAllQuery = scanner.nextLine();
+            addQuery = Queries.ADDQUERY;
+            updateQuery = Queries.UPDATEQUERY;
+            findByIdQuery = Queries.FINDBYIDQUERY;
+            findByNameQuery = Queries.FINDBYNAMEQUERY;
+            deleteQuery = Queries.DELETEQUERY;
+            getAllQuery = Queries.GETALLQUERY;
             conn = DriverManager.getConnection(url, props);
             try (Statement st = conn.createStatement()) {
-                st.execute("CREATE TABLE IF NOT EXISTS Items(id serial primary key, userName varchar(100), description varchar(100), created DATE, comments text)");
+                st.execute(Queries.CREATETABLE);
             }
         }
     }
@@ -85,13 +88,14 @@ public class Tracker implements AutoCloseable {
      *
      * @param item - добавляемая заявка
      * @return item
+     * @throws SQLException SQLException
      */
-    public Item add(Item item) throws SQLException {
+    public final Item add(final Item item) throws SQLException {
         try (PreparedStatement st = conn.prepareStatement(addQuery)) {
-            st.setString(1, item.getName());
-            st.setString(2, item.getDescription());
-            st.setDate(3, item.getCreated());
-            st.setString(4, item.getComments());
+            st.setString(Queries.ONE, item.getName());
+            st.setString(Queries.TWO, item.getDescription());
+            st.setDate(Queries.THREE, item.getCreated());
+            st.setString(Queries.FOUR, item.getComments());
             st.executeUpdate();
         }
         return item;
@@ -101,13 +105,14 @@ public class Tracker implements AutoCloseable {
      * метод обновляет содержимое заявки.
      *
      * @param item - добавляемая заявка
+     * @throws SQLException SQLException
      */
-    public void update(Item item) throws SQLException {
+    public final void update(final Item item) throws SQLException {
         try (PreparedStatement st = conn.prepareStatement(updateQuery)) {
-            st.setString(1, item.getName());
-            st.setString(2, item.getDescription());
-            st.setString(3, item.getComments());
-            st.setInt(4, item.getId());
+            st.setString(Queries.ONE, item.getName());
+            st.setString(Queries.TWO, item.getDescription());
+            st.setString(Queries.THREE, item.getComments());
+            st.setInt(Queries.FOUR, item.getId());
             st.executeUpdate();
         }
     }
@@ -117,19 +122,20 @@ public class Tracker implements AutoCloseable {
      *
      * @param id - ключ
      * @return item
+     * @throws SQLException SQLException
      */
-    public Item findById(int id) throws SQLException {
+    public final Item findById(final int id) throws SQLException {
         Item item = null;
         try (PreparedStatement st = conn.prepareStatement(findByIdQuery)) {
-            st.setInt(1, id);
+            st.setInt(Queries.ONE, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
                     item = new Item();
                     item.setId(id);
-                    item.setName(rs.getString(2));
-                    item.setDescription(rs.getString(3));
-                    item.setComments(rs.getString(5));
-                    item.setCreated(rs.getDate(4));
+                    item.setName(rs.getString(Queries.TWO));
+                    item.setDescription(rs.getString(Queries.THREE));
+                    item.setComments(rs.getString(Queries.FIVE));
+                    item.setCreated(rs.getDate(Queries.FOUR));
                 }
             }
         }
@@ -141,21 +147,23 @@ public class Tracker implements AutoCloseable {
      *
      * @param name - имя
      * @return finder
+     * @throws SQLException SQLException
      */
-    public ArrayList<Item> findByName(String name) throws SQLException {
+    public final ArrayList<Item> findByName(final String name)
+            throws SQLException {
         ArrayList<Item> finder = new ArrayList<>();
        try (PreparedStatement st = conn.prepareStatement(findByNameQuery)) {
-           st.setString(1, name);
+           st.setString(Queries.ONE, name);
            try (ResultSet rs = st.executeQuery()) {
                while (rs.next()) {
                    Item item = new Item();
-                   item.setId(rs.getInt(1));
-                   item.setName(rs.getString(2));
-                   item.setDescription(rs.getString(3));
-                   item.setComments(rs.getString(5));
-                   item.setCreated(rs.getDate(4));
+                   item.setId(rs.getInt(Queries.ONE));
+                   item.setName(rs.getString(Queries.TWO));
+                   item.setDescription(rs.getString(Queries.THREE));
+                   item.setComments(rs.getString(Queries.FIVE));
+                   item.setCreated(rs.getDate(Queries.FOUR));
                    finder.add(item);
-               }
+                                  }
            }
        }
        return finder;
@@ -165,10 +173,11 @@ public class Tracker implements AutoCloseable {
      * метод удаляет заявку по ключу.
      *
      * @param id - ключ
+     * @throws SQLException SQLException
      */
-    public void delete(int id) throws SQLException {
+    public final void delete(final int id) throws SQLException {
         try (PreparedStatement st = conn.prepareStatement(deleteQuery)) {
-            st.setInt(1, id);
+            st.setInt(Queries.ONE, id);
             st.executeUpdate();
         }
 
@@ -178,18 +187,19 @@ public class Tracker implements AutoCloseable {
      * метод возвращает список все заявок.
      *
      * @return finder
+     * @throws SQLException SQLException
      */
-    public ArrayList<Item> getAll() throws SQLException {
+    public final ArrayList<Item> getAll() throws SQLException {
         ArrayList<Item> finder = new ArrayList<>();
         try (PreparedStatement st = conn.prepareStatement(getAllQuery)) {
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     Item item = new Item();
-                    item.setId(rs.getInt(1));
-                    item.setName(rs.getString(2));
-                    item.setDescription(rs.getString(3));
-                    item.setComments(rs.getString(5));
-                    item.setCreated(rs.getDate(4));
+                    item.setId(rs.getInt(Queries.ONE));
+                    item.setName(rs.getString(Queries.TWO));
+                    item.setDescription(rs.getString(Queries.THREE));
+                    item.setComments(rs.getString(Queries.FIVE));
+                    item.setCreated(rs.getDate(Queries.FOUR));
                     finder.add(item);
                 }
             }
@@ -198,58 +208,14 @@ public class Tracker implements AutoCloseable {
         return finder;
     }
 
-    /**
-     * Closes this resource, relinquishing any underlying resources.
-     * This method is invoked automatically on objects managed by the
-     * {@code try}-with-resources statement.
-     * <p>
-     * <p>While this interface method is declared to throw {@code
-     * Exception}, implementers are <em>strongly</em> encouraged to
-     * declare concrete implementations of the {@code close} method to
-     * throw more specific exceptions, or to throw no exception at all
-     * if the close operation cannot fail.
-     * <p>
-     * <p> Cases where the close operation may fail require careful
-     * attention by implementers. It is strongly advised to relinquish
-     * the underlying resources and to internally <em>mark</em> the
-     * resource as closed, prior to throwing the exception. The {@code
-     * close} method is unlikely to be invoked more than once and so
-     * this ensures that the resources are released in a timely manner.
-     * Furthermore it reduces problems that could arise when the resource
-     * wraps, or is wrapped, by another resource.
-     * <p>
-     * <p><em>Implementers of this interface are also strongly advised
-     * to not have the {@code close} method throw {@link
-     * InterruptedException}.</em>
-     * <p>
-     * This exception interacts with a thread's interrupted status,
-     * and runtime misbehavior is likely to occur if an {@code
-     * InterruptedException} is {@linkplain Throwable#addSuppressed
-     * suppressed}.
-     * <p>
-     * More generally, if it would cause problems for an
-     * exception to be suppressed, the {@code AutoCloseable.close}
-     * method should not throw it.
-     * <p>
-     * <p>Note that unlike the {@link Closeable#close close}
-     * method of {@link Closeable}, this {@code close} method
-     * is <em>not</em> required to be idempotent.  In other words,
-     * calling this {@code close} method more than once may have some
-     * visible side effect, unlike {@code Closeable.close} which is
-     * required to have no effect if called more than once.
-     * <p>
-     * However, implementers of this interface are strongly encouraged
-     * to make their {@code close} methods idempotent.
-     *
-     * @throws Exception if this resource cannot be closed
-     */
+
     @Override
-    public void close() {
+    public final void close() {
         if (conn != null) {
             try {
                 conn.close();
             } catch (SQLException e) {
-                log.error(e.getMessage(), e);
+                LOG.error(e.getMessage(), e);
             }
         }
     }

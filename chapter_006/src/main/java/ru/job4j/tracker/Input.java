@@ -13,15 +13,25 @@ public interface Input {
      * @param question - вопрос
      * @return - ответ
      */
-    String ask(String question);
+    default String ask(String question) {
+     return null;
+    };
 
     /**
-     * метод задает пользователю вопрос и получает ответ - число в диапазоне от 0 до maxvalue.
+     * метод задает пользователю вопрос.
+     * и получает ответ -
+     * число в диапазоне от 0 до maxvalue.
      *
      * @param question - вопрос
      * @param maxvalue - maxvalue
      * @return - ответ
      */
     int ask(String question, int maxvalue);
+
+    /**
+     * метод зачем-то был нужен.
+     * но это было давно
+     * @return String[]
+     */
     String[] getOutputWrite();
 }

@@ -27,11 +27,15 @@ public class MenuTracker {
      * tracker.
      */
     private Tracker tracker;
+    /**
+     * menuMax.
+     */
+    private final int menuMax = 6;
 
     /**
      * массив действий пользователя.
      */
-    private ArrayList<UserAction> actions = new ArrayList<>(6);
+    private ArrayList<UserAction> actions = new ArrayList<>(menuMax);
 
     /**
      * текущая позиция.
@@ -48,7 +52,7 @@ public class MenuTracker {
      *
      * @return maxvalue
      */
-    public int getMaxvalue() {
+    public final int getMaxvalue() {
         return this.actions.size() - 1;
     }
 
@@ -57,12 +61,15 @@ public class MenuTracker {
      *
      * @param input   - ввод данных
      * @param tracker - tracker
+     * @param output - output
      */
-    public MenuTracker(Input input, Output output, Tracker tracker) {
+    public MenuTracker(final Input input, final Output output,
+                       final Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
         this.output = output;
     }
+
 
     /**
      * инициализация
@@ -70,16 +77,22 @@ public class MenuTracker {
      * @param input   - input
      * @param tracker - tracker
      */
-    public void init(Input input, Output output, Tracker tracker) {
+    /*
+    public final void init(final Input input, final Output output,
+    final Tracker tracker) {
+
 
     }
+    */
+
 
     /**
      * заполнение массива actions.
      */
-    public void fillActions() {
+    public final void fillActions() {
         this.actions.add(this.new AddItem("Add item", position++));
-        this.actions.add(new MenuTracker.FindItemById("Find item by id", position++));
+        this.actions.add(
+                new MenuTracker.FindItemById("Find item by id", position++));
         this.actions.add(new EditItem("Edit item", position++));
         this.actions.add(new DeleteItem("Delete item", position++));
         this.actions.add(new FindByName("Find item by name", position++));
@@ -89,7 +102,7 @@ public class MenuTracker {
     /**
      * вывод меню на экран.
      */
-    public void showMenu() {
+    public final void showMenu() {
         for (UserAction action : actions) {
             if (action != null) {
                 System.out.println(action.info());
@@ -99,14 +112,23 @@ public class MenuTracker {
 
     /**
      * выбор пользователя.
+     * @param key - key
      */
-    public void select(int key) {
+    public final void select(final int key) {
         this.actions.get(key).execute(this.input, this.output, this.tracker);
     }
 
+    /**
+     * класс AddItem.
+     */
     private class AddItem extends BaseAction {
+        /**
+         * констркетор.
+         * @param name - name
+         * @param key - key
+         */
 
-        AddItem(String name, int key) {
+        AddItem(final String name, final int key) {
             super(name, key);
         }
 
@@ -117,7 +139,8 @@ public class MenuTracker {
          * @param tracker - tracker
          */
         @Override
-        public void execute(Input input, Output output, Tracker tracker) {
+        public final void execute(final Input input, final Output output,
+                                  final Tracker tracker) {
             Item item = new Item();
             item.setName(input.ask("Input item's name "));
             item.setDescription(input.ask("Input item's description "));
@@ -141,6 +164,9 @@ public class MenuTracker {
 
     }
 
+    /**
+     * класс FindItemById.
+     */
     private static class FindItemById extends BaseAction {
 
 
@@ -150,7 +176,7 @@ public class MenuTracker {
          * @param name - имя события
          * @param key  - номер пункта меню
          */
-        FindItemById(String name, int key) {
+        FindItemById(final String name, final int key) {
             super(name, key);
         }
 
@@ -162,10 +188,12 @@ public class MenuTracker {
          * @param tracker - tracker
          */
         @Override
-        public void execute(Input input, Output output, Tracker tracker) {
+        public final void execute(final Input input, final Output output,
+                                  final Tracker tracker) {
             Item item = null;
             try {
-                item = tracker.findById(Integer.parseInt(input.ask("Enter item's id")));
+                item = tracker.findById(Integer.parseInt(
+                        input.ask("Enter item's id")));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -186,6 +214,9 @@ public class MenuTracker {
 
 }
 
+/**
+ * класс EditItem.
+ */
 class EditItem extends BaseAction {
 
 
@@ -195,7 +226,7 @@ class EditItem extends BaseAction {
      * @param name - имя события
      * @param key  - номер пункта меню
      */
-    EditItem(String name, int key) {
+    EditItem(final String name, final int key) {
         super(name, key);
     }
 
@@ -207,7 +238,8 @@ class EditItem extends BaseAction {
      * @param tracker - tracker
      */
     @Override
-    public void execute(Input input, Output output, Tracker tracker) {
+    public final void execute(final Input input,
+                              final Output output, final Tracker tracker) {
         Item item = new Item();
         item.setId(Integer.parseInt(input.ask("Please, enter item's id ")));
 
@@ -228,6 +260,9 @@ class EditItem extends BaseAction {
     }
 }
 
+/**
+ * клосс DeleteItem.
+ */
 
 class DeleteItem extends BaseAction {
 
@@ -237,7 +272,7 @@ class DeleteItem extends BaseAction {
      * @param name - имя события
      * @param key  - номер пункта меню
      */
-    DeleteItem(String name, int key) {
+    DeleteItem(final String name, final int key) {
         super(name, key);
     }
 
@@ -249,7 +284,8 @@ class DeleteItem extends BaseAction {
      * @param tracker - tracker
      */
     @Override
-    public void execute(Input input, Output output, Tracker tracker) {
+    public final void execute(final Input input,
+                              final Output output, final Tracker tracker) {
 
         int id = Integer.parseInt(input.ask("Please, enter item's id "));
         try {
@@ -261,6 +297,9 @@ class DeleteItem extends BaseAction {
     }
 }
 
+/**
+ * класс FindByName.
+ */
     class FindByName extends BaseAction {
         /**
          * Конструктор.
@@ -268,7 +307,7 @@ class DeleteItem extends BaseAction {
          * @param name - имя события
          * @param key  - номер пункта меню
          */
-        FindByName(String name, int key) {
+        FindByName(final String name, final int key) {
             super(name, key);
         }
 
@@ -281,7 +320,8 @@ class DeleteItem extends BaseAction {
          * @param tracker - tracker
          */
         @Override
-        public void execute(Input input, Output output, Tracker tracker) {
+        public final void execute(final Input input,
+                                  final Output output, final Tracker tracker) {
             String name = input.ask("Please, enter item's name");
             ArrayList<Item> finder = new ArrayList<>();
             try {
@@ -303,6 +343,9 @@ class DeleteItem extends BaseAction {
 
     }
 
+/**
+ * класс ShowAll.
+ */
     class ShowAll extends BaseAction {
         /**
          * Конструктор.
@@ -310,7 +353,7 @@ class DeleteItem extends BaseAction {
          * @param name - имя события
          * @param key  - номер пункта меню
          */
-        ShowAll(String name, int key) {
+        ShowAll(final String name, final int key) {
             super(name, key);
         }
 
@@ -323,7 +366,8 @@ class DeleteItem extends BaseAction {
          * @param tracker - tracker
          */
         @Override
-        public void execute(Input input, Output output, Tracker tracker) {
+        public final void execute(final Input input,
+                                  final Output output, final Tracker tracker) {
             ArrayList<Item> finder = new ArrayList<>();
             try {
                 finder = tracker.getAll();
@@ -340,8 +384,7 @@ class DeleteItem extends BaseAction {
 
             }
         }
-
-
     }
+
 
 
